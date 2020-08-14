@@ -26,7 +26,7 @@ const getFaculty = (req, res) => {
 };
 
 const createFaculty = (req, res) => {
-  const { fname, lname, dept, loc, rank, bio } = req.body;
+  const { fname, lname, dept, loc, rank, bio } = req.body.user;
   const image = new Image({
     img: {
       data: fs.readFileSync(
