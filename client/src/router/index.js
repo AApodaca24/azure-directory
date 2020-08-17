@@ -16,10 +16,9 @@ const routes = [
   },
   {
     path: "/directory",
-    name: "Directory",
     component: Directory,
     children: [
-      { path: '', name: "Table", component: Table },
+      { path: '', name: "Directory", component: Table },
       { path: 'new', name: "newForm", component: newForm },
       { path: 'edit', name: "editForm", component: editForm}
     ]

@@ -1,6 +1,5 @@
 <template>
   <div>
-    <h1>newForm</h1>
     <div class="form">
       <div class="header">
         <p>Please fill out form and attach one image.</p>

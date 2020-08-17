@@ -16,9 +16,6 @@ const storage = multer.diskStorage({
 const upload = multer({ storage: storage });
 
 
-
-
-
 api.get("/faculty", (req, res) => {
   service.getFaculty(req, res);
 });
@@ -26,5 +23,9 @@ api.get("/faculty", (req, res) => {
 api.post("/faculty", upload.single('image'), (req, res) => {
   service.createFaculty(req, res);
 });
+
+api.put('/faculty/:id', (req, res) => {
+  service.updateFaculty(req, res);
+})
 
 module.exports = api;

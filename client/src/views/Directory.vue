@@ -2,7 +2,7 @@
   <div class="center">
     <h1>Directory</h1>
     <main>
-      <router-view :faculty="faculty" />
+      <router-view :faculty="faculty" v-on:set-active="setActiveRecord" :active="activeRecord ? activeRecord[0] : ''" />
   </main>
   </div>
 </template>
@@ -17,7 +17,8 @@ export default {
       loading: false,
       error: false,
       errorText: '',
-      faculty: []
+      faculty: [],
+      activeRecord: null 
     };
   },
   methods: {
@@ -31,6 +32,11 @@ export default {
         this.errorText = error
         console.log(error)
       }
+    },
+    setActiveRecord(id) {
+      const filtered = this.faculty.filter(f => id === f._id)
+      this.activeRecord = filtered
+      this.$router.push({ name: 'editForm' })
     }
   },
   mounted() {
