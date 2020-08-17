@@ -1,19 +1,10 @@
 const fs = require("fs");
 const path = require("path");
-const multer = require("multer");
+
 const Faculty = require("./models");
 const ReadPreference = require("mongodb").ReadPreference;
 
-var storage = multer.diskStorage({
-  destination: (req, file, cb) => {
-    cb(null, "uploads");
-  },
-  filename: (req, file, cb) => {
-    cb(null, file.fieldname + "-" + Date.now());
-  },
-});
 
-var upload = multer({ storage: storage });
 
 require("./db").connect();
 
@@ -26,27 +17,24 @@ const getFaculty = (req, res) => {
 };
 
 const createFaculty = (req, res) => {
-  const { fname, lname, dept, loc, rank, bio } = req.body.user;
-  const image = new Image({
+  const request = JSON.parse(req.body.user);
+  console.dir(request)
+  const faculty = new Faculty({
+    name: request.name,
+    dept: request.dept,
+    loc: request.loc,
+    rank: request.rank,
+    bio: request.bio,
     img: {
       data: fs.readFileSync(
         path.join(__dirname + "/uploads/" + req.file.filename)
       ),
-      contentType: req.file.contentType,
+      contentType: req.file.type,
     },
-  });
-  const faculty = new Faculty({
-    fname,
-    lname,
-    dept,
-    loc,
-    rank,
-    bio,
-    img: image,
   });
   faculty
     .save()
-    .then(() => res.json(Faculty))
+    .then(() => res.json(faculty))
     .catch((err) => res.send(err));
 };
 

@@ -1,20 +1,38 @@
 <template>
   <div id="app">
-    <Nav />
+    <Nav :routes="links" />
     <main>
-      <router-view />
+      <router-view :routes="links" />
     </main>
   </div>
 </template>
 
 <script>
-import Nav from './components/layout/Nav'
+import Nav from "./components/layout/Nav";
 
 export default {
   components: {
-    Nav
-  }
-}
+    Nav,
+  },
+  data() {
+    return {
+      links: [
+        {
+          title: "Home",
+          link: "/",
+        },
+        {
+          title: "New Entry",
+          link: "/new",
+        },
+        {
+          title: "Directory",
+          link: { name: "Directory" },
+        },
+      ],
+    };
+  },
+};
 </script>
 
 <style>

@@ -6,12 +6,8 @@
           myAF
         </vs-navbar-title>
       </div>
-
-      <vs-navbar-item >
-        <router-link to="/">Home</router-link>
-      </vs-navbar-item>
-       <vs-navbar-item >
-        <router-link to="/new">New</router-link>
+      <vs-navbar-item v-for="(r, index) in routes" :key="index" >
+        <router-link :to="r.link">{{ r.title }}</router-link>
       </vs-navbar-item>
     </vs-navbar>
   </div>
@@ -19,7 +15,10 @@
 
 <script>
 export default {
-  name: "Nav"
+  name: "Nav",
+  props: {
+    routes: Array
+  }
 };
 </script>
 
