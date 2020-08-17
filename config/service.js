@@ -18,7 +18,11 @@ const getFaculty = (req, res) => {
 
 const createFaculty = (req, res) => {
   const request = JSON.parse(req.body.user);
-  console.dir(request)
+  console.dir(req.file)
+  const imgData = fs.readFileSync(
+    path.join(__dirname + "/uploads/" + req.file.filename)
+  )
+  console.dir(imgData)
   const faculty = new Faculty({
     name: request.name,
     dept: request.dept,
@@ -26,15 +30,13 @@ const createFaculty = (req, res) => {
     rank: request.rank,
     bio: request.bio,
     img: {
-      data: fs.readFileSync(
-        path.join(__dirname + "/uploads/" + req.file.filename)
-      ),
-      contentType: req.file.type,
+      data: imgData,
+      contentType: req.file.mimetype,
     },
   });
   faculty
     .save()
-    .then(() => res.json(faculty))
+    .then(() => res.status(200).send({ message: "User Added" }))
     .catch((err) => res.send(err));
 };
 

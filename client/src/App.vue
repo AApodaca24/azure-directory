@@ -23,7 +23,7 @@ export default {
         },
         {
           title: "New Entry",
-          link: "/new",
+          link: { name: "newForm" },
         },
         {
           title: "Directory",

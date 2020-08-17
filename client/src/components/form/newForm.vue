@@ -158,6 +158,14 @@ export default {
           this.errorText = err;
         });
       this.loading = false;
+      this.form.name = ''
+      this.form.dept = null
+      this.form.loc = ''
+      this.form.rank = null
+      this.form.bio = ''
+      this.selectedFile = null
+      this.$router.push({ name: "Directory" })
+      
     },
   },
 };
