@@ -3,7 +3,7 @@
     <div class="form">
       <div class="header">
         <p>Please Edit your entry</p>
-        <img :src="returnURIString" />
+        <vs-avatar size="70px" :src="active.img" />
       </div>
       <div class="form-body">
         <vs-input
@@ -39,13 +39,6 @@
             height="200px"
           />
         </div>
-        <div class="fileInput">
-          <input
-            type="file"
-            ref="file"
-            @change="onFileSelected($event.target.files)"
-          />
-        </div>
         <vs-button @click="onSubmit" color="rgb(0, 43, 92)" type="filled"
           >Submit</vs-button
         >
@@ -68,6 +61,7 @@ export default {
         loc: this.active.loc,
         rank: this.active.rank,
         bio: this.active.bio,
+        img: this.active.img,
       },
       error: false,
       errorText: "",
@@ -122,50 +116,29 @@ export default {
       scope: ["Faculty", "Major"],
     };
   },
-  computed: {
-    returnURIString() {
-        let arrayBuffer = this.active.img.data.data
-        const base64 = btoa(new Uint8Array(arrayBuffer).reduce((data,byte) => data + String.fromCharCode(byte), ''))
-      const src = `data:${this.active.img.contentType};base64,${base64}}`;
-      return src
-    },
-  },
   methods: {
-    onFileSelected(file) {
-      console.log(file);
-      this.loading = true;
-      if (!(file.length > 1)) {
-        this.selectedFile = file[0];
-        this.loading = false;
-      } else {
-        this.loading = false;
-        this.error = true;
-        this.errorText = "You can only upload one file.";
-      }
-    },
     async onSubmit() {
       this.loading = true;
-      const endpoint = this.scope.toLowerCase();
-      const userRecord = JSON.stringify(this.form);
-      const fd = new FormData();
-      fd.append("image", this.selectedFile, this.selectedFile.name);
-      fd.append("user", userRecord);
+      const id = this.active._id;
       axios
-        .post(`http://localhost:5000/api/v1/${endpoint}`, fd)
-        .then((res) => console.log(res))
+        .put(`http://localhost:5000/api/v1/faculty/${id}`, this.form)
+        .then((res) => {
+          console.log(res);
+          this.loading = false;
+          this.form.name = "";
+          this.form.dept = null;
+          this.form.loc = "";
+          this.form.rank = null;
+          this.form.bio = "";
+          this.form.img = "";
+          this.selectedFile = null;
+          this.$router.push({ name: "Directory" });
+        })
         .catch((err) => {
           this.loading = false;
           this.error = true;
           this.errorText = err;
         });
-      this.loading = false;
-      this.form.name = "";
-      this.form.dept = null;
-      this.form.loc = "";
-      this.form.rank = null;
-      this.form.bio = "";
-      this.selectedFile = null;
-      this.$router.push({ name: "Directory" });
     },
   },
 };

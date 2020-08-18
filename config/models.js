@@ -7,10 +7,7 @@ const facultySchema = new Schema({
     loc: String,
     rank: String,
     bio: String,
-    img: {
-        data: Buffer,
-        contentType: String
-    }
+    img: String
 })
 
 const Faculty = mongoose.model('Faculty', facultySchema)

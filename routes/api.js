@@ -31,9 +31,15 @@ api.post("/faculty", (req, res) => {
   service.createFaculty(req, res);
 });
 
+api.delete('/faculty/:id', (req, res) => {
+  service.deleteFaculty(req,res)
+})
+
 api.put('/faculty/:id', (req, res) => {
   service.updateFaculty(req, res);
 })
+
+
 
 api.post('/azure-repo', uploadStrategy, (req, res) => {
   azure.uploadFile(req, res);

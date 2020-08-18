@@ -53,6 +53,7 @@
               color="danger"
               type="line"
               icon="delete"
+              @click="$emit( 'delete-item', data[indextr]._id )"
             ></vs-button>
           </vs-td>
         </vs-tr>

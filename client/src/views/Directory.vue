@@ -5,6 +5,7 @@
       <router-view
         :faculty="faculty"
         v-on:set-active="setActiveRecord"
+        v-on:delete-item="deleteActiveRecord"
         :active="activeRecord ? activeRecord[0] : ''"
       />
     </main>
@@ -23,8 +24,13 @@ export default {
       errorText: "",
       faculty: [],
       activeRecord: null,
-      myFiles: []
+      myFiles: [],
     };
+  },
+  beforeRouteUpdate(to, from, next) {
+    console.log(to, from)
+    this.getData()
+    next()
   },
   methods: {
     successUpload(event) {
@@ -48,6 +54,13 @@ export default {
       const filtered = this.faculty.filter((f) => id === f._id);
       this.activeRecord = filtered;
       this.$router.push({ name: "editForm" });
+    },
+    deleteActiveRecord(id) {
+      axios
+        .delete(`http://localhost:5000/api/v1/faculty/${id}`)
+        .then((res) => console.log(res))
+        .catch((err) => console.log(err));
+        this.getData()
     },
   },
   mounted() {
