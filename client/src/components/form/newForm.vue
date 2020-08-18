@@ -1,6 +1,8 @@
 <template>
   <div>
-    <div class="form">
+    <div class="row">
+      <div class="col">
+        <div class="form">
       <div class="header">
         <p>Please fill out form and attach one image.</p>
       </div>
@@ -59,6 +61,9 @@
         >
       </div>
     </div>
+      </div>
+    </div>
+    
   </div>
 </template>
 
@@ -167,4 +172,22 @@ export default {
 };
 </script>
 
-<style scoped></style>
+<style scoped>
+.row {
+  width: 100vw;
+  height: 100%;
+}
+.col {
+  display: flex;
+  flex: column;
+  width: 85%;
+  max-height: 90vh;
+  margin: auto;
+  padding: 1.2em;
+  justify-content: center;
+  align-items: center;
+}
+.form {
+  width: 100%;
+}
+</style>

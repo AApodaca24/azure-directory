@@ -1,14 +1,19 @@
 <template>
   <div class="center">
-    <h1>Directory</h1>
-    <main>
-      <router-view
-        :faculty="faculty"
-        v-on:set-active="setActiveRecord"
-        v-on:delete-item="deleteActiveRecord"
-        :active="activeRecord ? activeRecord[0] : ''"
-      />
-    </main>
+    <div class="row">
+      <h1>Directory</h1>
+      <div class="col">
+        <main>
+          <router-view
+            :faculty="faculty"
+            v-on:set-active="setActiveRecord"
+            v-on:delete-item="deleteActiveRecord"
+            v-on:navigate-to="navigateToUser"
+            :active="activeRecord ? activeRecord[0] : ''"
+          />
+        </main>
+      </div>
+    </div>
   </div>
 </template>
 
@@ -28,9 +33,9 @@ export default {
     };
   },
   beforeRouteUpdate(to, from, next) {
-    console.log(to, from)
-    this.getData()
-    next()
+    console.log(to, from);
+    this.getData();
+    next();
   },
   methods: {
     successUpload(event) {
@@ -60,8 +65,11 @@ export default {
         .delete(`http://localhost:5000/api/v1/faculty/${id}`)
         .then((res) => console.log(res))
         .catch((err) => console.log(err));
-        this.getData()
+      this.getData();
     },
+    navigateToUser(id) {
+      this.$router.push({ name: 'User',params: { id }})
+    }
   },
   mounted() {
     this.getData();
@@ -69,4 +77,6 @@ export default {
 };
 </script>
 
-<style scoped></style>
+<style scoped>
+
+</style>
