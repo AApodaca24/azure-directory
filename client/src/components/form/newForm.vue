@@ -47,11 +47,12 @@
           />
         </div>
         <div class="fileInput">
-          <input
+          <!-- <input
             type="file"
             ref="file"
             @change="onFileSelected($event.target.files)"
-          />
+          /> -->
+          <Upload v-on:set-imgURI="setImageURI" />
         </div>
         <vs-button @click="onSubmit" color="rgb(0, 43, 92)" type="filled"
           >Submit</vs-button
@@ -63,9 +64,13 @@
 
 <script>
 import axios from "axios";
+import Upload from "../Upload";
 
 export default {
   name: "newForm",
+  components: {
+    Upload,
+  },
   data() {
     return {
       form: {
@@ -74,6 +79,7 @@ export default {
         loc: "",
         rank: null,
         bio: "",
+        img: "",
       },
       error: false,
       errorText: "",
@@ -129,42 +135,33 @@ export default {
     };
   },
   methods: {
-    onFileSelected(file) {
-        console.log(file)
-      this.loading = true;
-      if (!(file.length > 1)) {
-        this.selectedFile = file[0];
-        this.loading = false;
-      } else {
-        this.loading = false;
-        this.error = true;
-        this.errorText = "You can only upload one file.";
-      }
+    setImageURI(file) {
+      this.selectedFile = file.file;
+      console.log(this.selectedFile.name);
+      this.form.img = `https://directoryimages.blob.core.windows.net/assets/${this.selectedFile.name}`;
     },
     async onSubmit() {
       this.loading = true;
       const endpoint = this.scope.toLowerCase();
-      const userRecord = JSON.stringify(this.form);
-      const fd = new FormData();
-      fd.append("image", this.selectedFile, this.selectedFile.name);
-      fd.append("user", userRecord);
       axios
-        .post(`http://localhost:5000/api/v1/${endpoint}`, fd)
-        .then((res) => console.log(res))
+        .post(`http://localhost:5000/api/v1/${endpoint}`, this.form)
+        .then((res) => {
+          console.log(res);
+          this.loading = false;
+          this.form.name = "";
+          this.form.dept = null;
+          this.form.loc = "";
+          this.form.rank = null;
+          this.form.bio = "";
+          this.form.img = "";
+          this.selectedFile = null;
+          this.$router.push({ name: "Directory" });
+        })
         .catch((err) => {
           this.loading = false;
           this.error = true;
           this.errorText = err;
         });
-      this.loading = false;
-      this.form.name = ''
-      this.form.dept = null
-      this.form.loc = ''
-      this.form.rank = null
-      this.form.bio = ''
-      this.selectedFile = null
-      this.$router.push({ name: "Directory" })
-      
     },
   },
 };
