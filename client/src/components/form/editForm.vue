@@ -1,95 +1,207 @@
 <template>
   <div>
-    <div class="row">
-      <div class="col">
-        <div class="form">
-          <div class="header">
-            <p>Please Edit your entry</p>
-            <div class="avatar" v-if="editmode">
-              <vs-avatar size="70px" :src="active.img" />
-              <vs-button
-                @click="toggleEdit"
-                radius
-                color="rgb(0, 43, 92)"
-                type="filled"
-                >Change</vs-button
-              >
-            </div>
-            <div class="upload" v-else>
-              <vs-button
-                type="gradient"
-                color="danger"
-                icon="cancel"
-                v-on:click="toggleEdit"
-                style="z-index:99;"
-              ></vs-button>
-              <Upload v-on:set-imgURI="setImageURI" />
-            </div>
-          </div>
-          <div class="form-body">
-            <vs-input
-              v-model="form.name"
-              label="Full Name"
-              placeholder="Please enter Full Name"
-            />
-            <vs-input
-              v-model="form.loc"
-              label="Location"
-              placeholder="Office Location"
-            />
-            <vs-select label="Select Department" v-model="form.dept">
-              <vs-select-item
-                :key="index"
-                :value="d"
-                :text="d"
-                v-for="(d, index) in deptsEnum"
-              />
-            </vs-select>
-            <vs-select label="Select Rank" v-model="form.rank">
-              <vs-select-item
-                :key="index"
-                :value="r"
-                :text="r"
-                v-for="(r, index) in rankEnum"
-              />
-            </vs-select>
-            <div>
-              <vs-textarea
-                v-model="form.bio"
-                label="Enter Bio here"
-                height="200px"
-              />
-            </div>
-            <vs-button @click="onSubmit" color="rgb(0, 43, 92)" type="filled"
-              >Submit</vs-button
-            >
-          </div>
-        </div>
-      </div>
-    </div>
+    <v-row no-gutters>
+      <v-col></v-col>
+      <v-col cols="8">
+        <v-layout class="mt-9">
+          <v-container>
+            <v-card>
+              <v-row>
+                <v-col cols="auto">
+                  <v-flex v-if="editmode">
+                    <v-container>
+                      <v-avatar size="140" class="mx-8 pa-2">
+                        <img :src="active.img" :alt="active.name" />
+                      </v-avatar>
+                      <v-btn
+                        class="mx-2"
+                        fab
+                        dark
+                        small
+                        absolute
+                        top
+                        left
+                        color="rgb(0, 43, 92)"
+                        @click="toggleEdit"
+                      >
+                        <v-icon dark>mdi-pencil</v-icon>
+                      </v-btn>
+                    </v-container>
+                  </v-flex>
+                  <v-flex v-else>
+                    <v-btn
+                      class="mx-2"
+                      fab
+                      dark
+                      small
+                      absolute
+                      top
+                      left
+                      color="rgb(0, 43, 92)"
+                      @click="toggleEdit"
+                    >
+                      <v-icon dark>cancel</v-icon>
+                    </v-btn>
+                    <v-container style="max-width:200px">
+                      <Upload v-on:set-imgURI="setImageURI" />
+                      <small
+                        >Drag or drop your image over the window or click the
+                        window to open up the file explorer</small
+                      >
+                    </v-container>
+                  </v-flex>
+                </v-col>
+                <v-col>
+                  <v-row>
+                    <v-text-field
+                      v-model="form.name"
+                      filled
+                      label="Enter Full Name"
+                      required
+                      class="pa-2"
+                    ></v-text-field>
+                    <v-select
+                      v-model="form.rank"
+                      :items="rankEnum"
+                      filled
+                      label="Rank/Grade"
+                      class="pa-2 pr-6"
+                    ></v-select>
+                  </v-row>
+                  <v-row>
+                    <v-select
+                      v-model="form.dept"
+                      :items="deptsEnum"
+                      filled
+                      label="Select Department"
+                      class="pa-2"
+                    ></v-select>
+                    <v-text-field
+                      v-model="form.title"
+                      label="Title"
+                      filled
+                      required
+                      class="pa-2 pr-6"
+                    ></v-text-field>
+                  </v-row>
+                </v-col>
+              </v-row>
+              <v-row>
+                <v-col>
+                  <v-flex class="pa-2 pl-4">
+                    <v-text-field
+                      v-model="form.email"
+                      label="Enter Email"
+                      filled
+                      required
+                    ></v-text-field>
+                    <v-text-field
+                      v-model="form.phone"
+                      filled
+                      label="Enter Phone"
+                      placeholder="Enter 10 digits no dashes"
+                      required
+                    ></v-text-field>
+                    <v-text-field
+                      v-model="form.loc"
+                      label="Office Location"
+                      placeholder="e.g., 6J-109"
+                      filled
+                      required
+                    ></v-text-field>
+                    <v-combobox
+                      v-model="form.hobbies"
+                      :items="form.hobbies"
+                      label="Hobbies"
+                      hint="Please enter as many as you like"
+                      filled
+                      multiple
+                      chips
+                    ></v-combobox>
+                  </v-flex>
+                </v-col>
+                <v-col>
+                  <v-flex class="pa-2 pr-4">
+                    <v-textarea
+                      filled
+                      v-model="form.bio"
+                      name="input-7-4"
+                      label="Personal Bio"
+                      height="350px"
+                    ></v-textarea>
+                  </v-flex>
+                </v-col>
+              </v-row>
+              <v-row>
+                <v-flex xs12>
+                  <v-container class="ma-4" row>
+                    <v-flex
+                      style="text-align:center;width:2rem;font-size:1rem;"
+                      class="mt-5"
+                    >
+                      Do you want to add an image gallery to your profile?
+                    </v-flex>
+                    <v-flex>
+                      <v-switch v-model="gallery"></v-switch>
+                    </v-flex>
+                  </v-container>
+                </v-flex>
+              </v-row>
+              <v-row v-if="gallery">
+                <v-flex>
+                  <v-container class="mx-auto ma-2" style="width:80%">
+                    <p>Add images to the grey area below. Upload as many as you like up to 10. These images will then display in your profile page.</p>
+                  </v-container>
+                  <v-container class="mx-auto ma-2" style="width:80%">
+                    <multiUpload v-on:set-multiImgURI="setMultiImageURI" />
+                  </v-container>
+                </v-flex>
+              </v-row>
+              <v-row>
+                <v-flex class="mx-5 mb-4">
+                  <v-btn block color="success" @click="onSubmit" dark
+                    >Submit</v-btn
+                  >
+                </v-flex>
+              </v-row>
+            </v-card>
+          </v-container>
+        </v-layout>
+      </v-col>
+      <v-col></v-col>
+    </v-row>
   </div>
 </template>
 
 <script>
 import axios from "axios";
 import Upload from "../Upload";
+import multiUpload from "../multiUpload";
 
 export default {
   name: "editForm",
   props: ["faculty", "active"],
   components: {
     Upload,
+    multiUpload,
   },
   data() {
     return {
       editmode: true,
+      gallery: false,
       form: {
         name: this.active.name,
+        title: this.active.title,
         dept: this.active.dept,
         loc: this.active.loc,
+        email: this.active.email,
+        phone: this.active.phone,
         rank: this.active.rank,
         bio: this.active.bio,
         img: this.active.img,
+        hobbies: this.active.hobbies,
+        scope: this.active.scope,
+        multiImg: [],
       },
       error: false,
       errorText: "",
@@ -145,10 +257,11 @@ export default {
     };
   },
   methods: {
-    setImageURI(file) {
+    setMultiImageURI(file) {
       this.selectedFile = file.file;
       console.log(this.selectedFile.name);
-      this.form.img = `https://directoryimages.blob.core.windows.net/assets/${this.selectedFile.name}`;
+      const img = `https://directoryimages.blob.core.windows.net/assets/${this.selectedFile.name}`;
+      this.form.multiImg.push(img);
     },
     toggleEdit() {
       switch (this.editmode) {
@@ -175,6 +288,7 @@ export default {
           this.form.bio = "";
           this.form.img = "";
           this.selectedFile = null;
+          this.multiImg = [];
           this.$router.push({ name: "Directory" });
         })
         .catch((err) => {
@@ -188,20 +302,6 @@ export default {
 </script>
 
 <style scoped>
-.row {
-  width: 100vw;
-  height: 100%;
-}
-.col {
-  display: flex;
-  flex: column;
-  width: 85%;
-  max-height: 90vh;
-  margin: auto;
-  padding: 1.2em;
-  justify-content: center;
-  align-items: center;
-}
 .form {
   width: 100%;
 }

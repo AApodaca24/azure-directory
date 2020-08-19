@@ -20,11 +20,11 @@ const routes = [
     path: "/directory",
     component: Directory,
     children: [
-      { path: '', name: "Directory", component: Table },
-      { path: ':dept', name: "department", component: Card},
-      { path: 'new', name: "newForm", component: newForm },
-      { path: 'edit', name: "editForm", component: editForm},
-      { path: ':id', name: "User", component: User }
+      { path: "", name: "Directory", component: Table },
+      { path: ":dept", name: "department", component: Card },
+      { path: "new", name: "newForm", component: newForm },
+      { path: "edit", name: "editForm", component: editForm },
+      { path: ":id", name: "User", component: User }
     ]
   }
 ];

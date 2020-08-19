@@ -1,48 +1,120 @@
 <template>
   <div class="user">
-    <div class="row">
-      <div class="col">
-        <div class="card">
-          <div class="img">
-            <img :src="user.img" />
-          </div>
-          <div class="data">
-            <div class="header">
-              <small style="text-transform:uppercase;letter-spacing:.2em;">{{
-                user.rank
-              }}</small>
-              <p>{{ user.name }}</p>
-            </div>
-            <div class="body">
-              <p>{{ user.bio }}</p>
-            </div>
-            <small
-              style="position:absolute;bottom:2%;text-transform:uppercase;letter-spacing:.1em;"
-              >{{ "Office location: " + user.loc }}</small
-            >
-            <div class="btn">
-              <vs-button
-                color="rgb(0, 43, 92)"
-                type="filled"
-                size="large"
-                icon="keyboard_backspace"
+    <v-row no-gutter>
+      <v-col></v-col>
+      <v-col cols="8" class="mx-auto">
+        <v-layout>
+          <v-flex xs12>
+            <v-card>
+              <v-btn
+                class="mx-2"
                 @click="goBack"
-              ></vs-button>
-            </div>
-            <div class="btn-2">
-              <vs-button
-                color="rgb(0, 43, 92)"
-                type="filled"
-                size="large"
-                icon="group"
-                @click="navigateto"
-              ></vs-button>
-            </div>
-
-          </div>
-        </div>
-      </div>
-    </div>
+                fab
+                dark
+                small
+                absolute
+                right
+                color="primary"
+              >
+                <v-icon dark>keyboard_backspace</v-icon>
+              </v-btn>
+              <v-btn
+                class="mx-2"
+                @click="goBack"
+                fab
+                dark
+                small
+                absolute
+                right
+                color="primary"
+                style="right:9%"
+              >
+                <v-icon dark>collections</v-icon>
+              </v-btn>
+              <v-row class="justify-center">
+                <v-flex>
+                  <v-container>
+                    <v-img
+                      :src="user.img"
+                      :alt="user.name"
+                      aspect-ratio="1"
+                      contain
+                    />
+                  </v-container>
+                </v-flex>
+                <v-flex>
+                  <v-container style="padding:2rem">
+                    <small
+                      style="letter-spacing:.2rem;text-transform:uppercase;"
+                      >{{ user.rank }}</small
+                    >
+                    <h2>{{ user.name }}</h2>
+                    <h4>{{ user.title }}</h4>
+                    <br />
+                    <span>{{ user.email }}</span
+                    ><br />
+                    <span>{{ user.phone }}</span
+                    ><br />
+                    <span>{{ user.loc }}</span>
+                  </v-container>
+                </v-flex>
+              </v-row>
+              <v-row>
+                <v-container style="padding:0 2rem">
+                  <div v-html="user.bio"></div>
+                </v-container>
+              </v-row>
+              <v-row style="padding:1rem 0 2rem 2rem">
+                <v-chip v-for="(a, index) in user.hobbies" :key="index">
+                  {{ a }}
+                </v-chip>
+              </v-row>
+              <v-row>
+                <v-container>
+                  <h1>{{ user.name + `'s Gallery` }}</h1>
+                </v-container>
+              </v-row>
+              <v-row>
+                <v-container fluid>
+                  <v-row>
+                    <v-col
+                      v-for="(img, index) in user.multiImg"
+                      :key="index"
+                      class="d-flex child-flex"
+                      cols="4"
+                    >
+                      <v-card flat tile class="d-flex">
+                        <v-img
+                          :src="
+                            img
+                          "
+                          aspect-ratio="1"
+                          class="grey lighten-2"
+                        >
+                          <template v-slot:placeholder>
+                            <v-row
+                              class="fill-height ma-0"
+                              align="center"
+                              justify="center"
+                            >
+                              <v-progress-circular
+                                indeterminate
+                                color="grey lighten-5"
+                              ></v-progress-circular>
+                            </v-row>
+                          </template>
+                        </v-img>
+                      </v-card>
+                    </v-col>
+                  </v-row>
+                </v-container>
+              </v-row>
+            </v-card>
+          </v-flex>
+        </v-layout>
+      </v-col>
+      <v-col></v-col>
+    </v-row>
   </div>
 </template>
 
@@ -68,8 +140,11 @@ export default {
       this.$router.go(-1);
     },
     navigateto() {
-        this.$router.push({ name: 'department', params: { dept: this.user.dept }})
-    }
+      this.$router.push({
+        name: "department",
+        params: { dept: this.user.dept },
+      });
+    },
   },
 };
 </script>
@@ -77,28 +152,6 @@ export default {
 <style scoped>
 .user {
   position: relative;
-}
-.row {
-  width: 100vw;
-  height: 100%;
-}
-.col {
-  display: flex;
-  flex: column;
-  width: 85%;
-  height: 85vh;
-  margin: auto;
-  padding: 1.2em;
-  justify-content: center;
-  align-items: center;
-}
-
-.card {
-  max-width: 100%;
-  height: 420px;
-  display: flex;
-  border: 1px solid rgb(0, 43, 92);
-  border-radius: 5px;
 }
 
 .img {

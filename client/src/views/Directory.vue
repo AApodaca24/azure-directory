@@ -1,8 +1,5 @@
 <template>
   <div class="center">
-    <div class="row">
-      <h1>Directory</h1>
-      <div class="col">
         <main>
           <router-view
             :faculty="faculty"
@@ -12,8 +9,6 @@
             :active="activeRecord ? activeRecord[0] : ''"
           />
         </main>
-      </div>
-    </div>
   </div>
 </template>
 
@@ -29,7 +24,7 @@ export default {
       errorText: "",
       faculty: [],
       activeRecord: null,
-      myFiles: [],
+      myFiles: []
     };
   },
   beforeRouteUpdate(to, from, next) {
@@ -56,27 +51,28 @@ export default {
       }
     },
     setActiveRecord(id) {
-      const filtered = this.faculty.filter((f) => id === f._id);
+      const filtered = this.faculty.filter(f => id === f._id);
       this.activeRecord = filtered;
       this.$router.push({ name: "editForm" });
     },
     deleteActiveRecord(id) {
       axios
         .delete(`http://localhost:5000/api/v1/faculty/${id}`)
-        .then((res) => console.log(res))
-        .catch((err) => console.log(err));
+        .then(res => {
+          console.log(res)
+          this.$router.push()
+        })
+        .catch(err => console.log(err));
       this.getData();
     },
     navigateToUser(id) {
-      this.$router.push({ name: 'User',params: { id }})
+      this.$router.push({ name: "User", params: { id } });
     }
   },
-  mounted() {
+  created() {
     this.getData();
-  },
+  }
 };
 </script>
 
-<style scoped>
-
-</style>
+<style scoped></style>

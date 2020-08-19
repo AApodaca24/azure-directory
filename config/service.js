@@ -23,18 +23,23 @@ const createFaculty = (req, res) => {
     rank: request.rank,
     bio: request.bio,
     img: request.img,
+    title: request.title,
+    phone: request.phone,
+    email: request.email,
+    scope: request.scope,
+    hobbies: request.hobbies
   });
   console.log(faculty);
   faculty
     .save()
     .then(() => res.status(200).send({ message: "User Added" }))
-    .catch((err) => res.send({error: err.message}));
+    .catch((err) => res.send({ error: err.message }));
 };
 
 const updateFaculty = (req, res) => {
-  const request = req.body
+  const request = req.body;
   const id = req.params.id;
-  console.log(request, id)
+  console.log(request, id);
   Faculty.findOne({ _id: id })
     .then((f) => {
       f.name = request.name;
@@ -43,7 +48,15 @@ const updateFaculty = (req, res) => {
       f.rank = request.rank;
       f.bio = request.bio;
       f.img = request.img;
-      f.save().then(res.status(200).send(f)).catch(err => res.status(500).json(err))
+      f.title = request.title;
+      f.phone = request.phone;
+      f.email = request.email;
+      f.scope = request.scope;
+      f.hobbies = request.hobbies;
+      f.multiImg = request.multiImg
+      f.save()
+        .then(res.status(200).send(f))
+        .catch((err) => res.status(500).json(err));
     })
     .catch((err) => res.status(500).json(err));
 };
@@ -51,17 +64,17 @@ const updateFaculty = (req, res) => {
 const deleteFaculty = async (req, res) => {
   const id = req.params.id;
   try {
-    let faculty = await Faculty.findOne({ _id: id })
-    console.dir(faculty)
+    let faculty = await Faculty.findOne({ _id: id });
+    console.dir(faculty);
     if (!faculty) {
-      res.status(404).send('not found')
+      res.status(404).send("not found");
     } else {
-      await Faculty.remove({ _id: id })
-      res.status(200).send('user deleted')
+      await Faculty.remove({ _id: id });
+      res.status(200).send("user deleted");
     }
   } catch (err) {
-    console.log(dir)
-    res.send(err)
+    console.log(dir);
+    res.send(err);
   }
 };
 
@@ -69,5 +82,5 @@ module.exports = {
   getFaculty,
   createFaculty,
   updateFaculty,
-  deleteFaculty
+  deleteFaculty,
 };

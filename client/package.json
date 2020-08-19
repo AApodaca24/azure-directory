@@ -17,7 +17,8 @@
     "vue-filepond": "^6.0.2",
     "vue-router": "^3.2.0",
     "vue2-dropzone": "^3.6.0",
-    "vuesax": "^3.11.17"
+    "vuesax": "^3.11.17",
+    "vuetify": "^2.3.9"
   },
   "devDependencies": {
     "@vue/cli-plugin-babel": "~4.5.0",
@@ -31,6 +32,7 @@
     "eslint-plugin-vue": "^6.2.2",
     "lint-staged": "^9.5.0",
     "prettier": "^1.19.1",
+    "vue-cli-plugin-vuetify": "~2.0.7",
     "vue-template-compiler": "^2.6.11"
   },
   "eslintConfig": {

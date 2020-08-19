@@ -42,8 +42,8 @@ export default {
   min-height: 400px;
   display: flex;
   flex-direction: column;
-  text-align:center;
-  padding: .8em;
+  text-align: center;
+  padding: 0.8em;
 }
 
 .card div {
@@ -52,5 +52,4 @@ export default {
   justify-content: space-around;
   margin-top: 1.2em;
 }
-
 </style>

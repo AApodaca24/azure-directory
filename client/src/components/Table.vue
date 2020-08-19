@@ -1,76 +1,84 @@
 <template>
   <div>
-    <div class="row">
-      <div class="col">
-        <div class="table">
-          <vs-table max-items="10" pagination search :data="faculty">
-            <template slot="header" >
-              <h3>
+    <div class="table">
+      <v-row no-gutters>
+        <v-col></v-col>
+        <v-col cols="8">
+          <v-layout class="mt-3">
+            <v-flex class="mx-auto" style="width:100%">
+              <v-card>
+                <v-container>
+                  <h2>Welcome to the Directory</h2>
+                  <p>
+                    Here you will find a list of all the members in the
+                    directory. If you would like to add a new member, please
+                    click the add button
+                  </p>
+                  <p>
+                    If you would like to see the department page listing click
+                    on the departments menu for a list of departments
+                  </p>
+                </v-container>
+                <v-container>
+                  <v-btn
+                    :to="{ name: 'newForm' }"
+                    class="ma-2"
+                    tile
+                    color="indigo"
+                    dark
+                    >Add New</v-btn
+                  >
+                </v-container>
+              </v-card>
+            </v-flex>
+          </v-layout>
+          <v-layout class="mt-3">
+            <v-card class="mx-auto" style="width:100%">
+              <v-card-title>
                 Members
-              </h3>
-            </template>
-            <template slot="thead">
-              <vs-th sort-key="dept">
-                Department
-              </vs-th>
-              <vs-th sort-key="name">
-                Name
-              </vs-th>
-              <vs-th>
-                Location
-              </vs-th>
-              <vs-th>
-                Rank/Grade
-              </vs-th>
-              <vs-th>
-                Action
-              </vs-th>
-            </template>
-
-            <template slot-scope="{ data }">
-              <vs-tr :key="indextr" v-for="(tr, indextr) in data">
-                <vs-td :data="data[indextr].dept">
-                  {{ data[indextr].dept }}
-                </vs-td>
-
-                <vs-td :data="data[indextr].name">
-                  {{ data[indextr].name }}
-                </vs-td>
-
-                <vs-td :data="data[indextr].loc">
-                  {{ data[indextr].loc }}
-                </vs-td>
-                <vs-td :data="data[indextr].rank">
-                  {{ data[indextr].rank }}
-                </vs-td>
-                <vs-td :data="data[indextr]._id">
+                <v-spacer></v-spacer>
+                <v-text-field
+                  v-model="search"
+                  append-icon="mdi-magnify"
+                  label="Search"
+                  single-line
+                  hide-details
+                ></v-text-field>
+              </v-card-title>
+              <v-data-table
+                :headers="headers"
+                :items="faculty"
+                :search="search"
+              >
+                <template v-slot:item.action="{ item }">
                   <vs-button
                     radius
                     color="primary"
                     type="line"
                     icon="edit"
-                    @click="$emit('set-active', data[indextr]._id)"
+                    @click="$emit('set-active', item._id)"
                   ></vs-button>
                   <vs-button
                     radius
                     color="danger"
                     type="line"
                     icon="delete"
-                    @click="$emit('delete-item', data[indextr]._id)"
+                    @click="$emit('delete-item', item._id)"
                   ></vs-button>
                   <vs-button
                     radius
                     color="success"
                     type="line"
                     icon="launch"
-                    @click="$emit('navigate-to', data[indextr]._id)"
+                    @click="$emit('navigate-to', item._id)"
                   ></vs-button>
-                </vs-td>
-              </vs-tr>
-            </template>
-          </vs-table>
-        </div>
-      </div>
+                </template>
+              </v-data-table>
+            </v-card>
+          </v-layout>
+        </v-col>
+        <v-col></v-col>
+      </v-row>
     </div>
   </div>
 </template>
@@ -79,25 +87,21 @@
 export default {
   name: "Table",
   props: ["faculty"],
+  data() {
+    return {
+      headers: [
+        {
+          text: "Department",
+          value: "dept",
+        },
+        { text: "Name", value: "name", align: "start", sortable: true },
+        { text: "Rank/Grade", value: "rank" },
+        { text: "Location", value: "loc" },
+        { text: "Action", value: "action" },
+      ],
+    };
+  },
 };
 </script>
 
-<style scoped>
-.row {
-  width: 100vw;
-  height: 100%;
-}
-.col {
-  display: flex;
-  flex: column;
-  width: 85%;
-  max-height: 90vh;
-  margin: auto;
-  padding: 1.2em;
-  justify-content: center;
-  align-items: center;
-}
-.table {
-  width: 100%
-}
-</style>
+<style scoped></style>

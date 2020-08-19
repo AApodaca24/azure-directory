@@ -1,69 +1,164 @@
 <template>
   <div>
-    <div class="row">
-      <div class="col">
-        <div class="form">
-      <div class="header">
-        <p>Please fill out form and attach one image.</p>
-      </div>
-      <div class="form-body" ref="form" @submit.prevent="onSubmit">
-        <vs-select label="Faculty or Major" v-model="scope">
-          <vs-select-item
-            :key="index"
-            :value="r"
-            :text="r"
-            v-for="(r, index) in scope"
-          />
-        </vs-select>
-        <vs-input
-          v-model="form.name"
-          label="Full Name"
-          placeholder="Please enter Full Name"
-        />
-        <vs-input
-          v-model="form.loc"
-          label="Location"
-          placeholder="Office Location"
-        />
-        <vs-select label="Select Department" v-model="form.dept">
-          <vs-select-item
-            :key="index"
-            :value="d"
-            :text="d"
-            v-for="(d, index) in deptsEnum"
-          />
-        </vs-select>
-        <vs-select label="Select Rank" v-model="form.rank">
-          <vs-select-item
-            :key="index"
-            :value="r"
-            :text="r"
-            v-for="(r, index) in rankEnum"
-          />
-        </vs-select>
-        <div>
-          <vs-textarea
-            v-model="form.bio"
-            label="Enter Bio here"
-            height="200px"
-          />
-        </div>
-        <div class="fileInput">
-          <!-- <input
-            type="file"
-            ref="file"
-            @change="onFileSelected($event.target.files)"
-          /> -->
-          <Upload v-on:set-imgURI="setImageURI" />
-        </div>
-        <vs-button @click="onSubmit" color="rgb(0, 43, 92)" type="filled"
-          >Submit</vs-button
-        >
-      </div>
-    </div>
-      </div>
-    </div>
-    
+    <v-row no-gutter>
+      <v-col></v-col>
+      <v-col cols="8">
+        <v-container>
+          <v-flex xs12>
+            <v-card style="padding:1.2rem">
+              <h1>
+                Add Member
+              </h1>
+              <p>Please see below for walking through adding a member</p>
+            </v-card>
+          </v-flex>
+        </v-container>
+        <v-container>
+          <v-flex xs12>
+            <v-form
+              ref="form"
+              v-model="valid"
+              lazy-validation
+              @submit.prevent="onSubmit"
+            >
+              <v-stepper v-model="e6" vertical>
+                <v-stepper-step :complete="e6 > 1" step="1" editable>
+                  Basic Information
+                  <small style="margin-top:1rem;"
+                    >Lets start out with some basic information</small
+                  >
+                </v-stepper-step>
+                <v-stepper-content step="1">
+                  <v-card
+                    color="grey lighten-3"
+                    style="margin-bottom:2rem;"
+                    height="400px"
+                  >
+                    <v-select
+                      v-model="form.scope"
+                      :items="category"
+                      filled
+                      label="Faculty or Major"
+                    ></v-select>
+                    <v-text-field
+                      v-model="form.name"
+                      filled
+                      label="Enter Full Name"
+                      required
+                    ></v-text-field>
+                    <v-select
+                      v-model="form.rank"
+                      :items="rankEnum"
+                      filled
+                      label="Rank/Grade"
+                    ></v-select>
+                    <v-select
+                      v-model="form.dept"
+                      :items="deptsEnum"
+                      filled
+                      label="Select Department"
+                    ></v-select>
+                    <v-text-field
+                      v-model="form.title"
+                      label="Title"
+                      filled
+                      required
+                    ></v-text-field>
+                  </v-card>
+                  <v-container>
+                    <v-flex>
+                      <v-btn color="rgb(0, 43, 92)" dark @click="e6 = 2"
+                        >Continue</v-btn
+                      >
+                      <v-btn text>Cancel</v-btn>
+                    </v-flex>
+                  </v-container>
+                </v-stepper-content>
+                <v-stepper-step :complete="e6 > 2" step="2" editable
+                  >Enter some contact Info</v-stepper-step
+                >
+                <v-stepper-content step="2">
+                  <v-card
+                    color="grey lighten-3"
+                    style="margin-bottom:2rem;"
+                    height="400px"
+                  >
+                    <v-text-field
+                      v-model="form.email"
+                      label="Enter Email"
+                      :rules="emailRules"
+                      filled
+                      required
+                    ></v-text-field>
+                    <v-text-field
+                      v-model="form.phone"
+                      filled
+                      label="Enter Phone"
+                      placeholder="Enter 10 digits no dashes"
+                      required
+                    ></v-text-field>
+                    <v-text-field
+                      v-model="form.loc"
+                      label="Office Location"
+                      placeholder="e.g., 6J-109"
+                      filled
+                      required
+                    ></v-text-field>
+                  </v-card>
+                  <v-btn color="rgb(0, 43, 92)" dark @click="e6 = 3"
+                    >Continue</v-btn
+                  >
+                  <v-btn text>Cancel</v-btn>
+                </v-stepper-content>
+                <v-stepper-step :complete="e6 > 3" step="3" editable
+                  >Now for the good stuff.</v-stepper-step
+                >
+                <v-stepper-content step="3">
+                  <v-card
+                    color="grey lighten-3"
+                    style="margin-bottom:2rem;"
+                    height="380px"
+                  >
+                    <v-row>
+                      <v-col xs6>
+                        <v-combobox
+                          v-model="form.hobbies"
+                          :items="form.hobbies"
+                          label="Hobbies"
+                          hint="Please enter as many as you like"
+                          multiple
+                          chips
+                        ></v-combobox>
+                        <div class="upload">
+                          <Upload v-on:set-imgURI="setImageURI" />
+                        </div>
+                      </v-col>
+                      <v-col xs6>
+                        <v-textarea
+                          filled
+                          v-model="form.bio"
+                          name="input-7-4"
+                          label="Personal Bio"
+                          height="350px"
+                        ></v-textarea>
+                      </v-col>
+                    </v-row>
+                  </v-card>
+                  <v-flex row justify-space-around class="ml-2">
+                    <v-btn color="success" dark @click="onSubmit">Submit</v-btn>
+                    <v-btn text>Cancel</v-btn>
+                    <v-btn color="error" class="mr-4" @click="reset">
+                      Reset Form
+                    </v-btn>
+                  </v-flex>
+                </v-stepper-content>
+              </v-stepper>
+            </v-form>
+          </v-flex>
+        </v-container>
+      </v-col>
+      <v-col></v-col>
+    </v-row>
   </div>
 </template>
 
@@ -78,13 +173,20 @@ export default {
   },
   data() {
     return {
+      e6: 1,
+      valid: true,
       form: {
         name: "",
+        title: "",
         dept: null,
         loc: "",
+        email: "",
+        phone: "",
         rank: null,
         bio: "",
         img: "",
+        hobbies: [],
+        scope: null,
       },
       error: false,
       errorText: "",
@@ -136,10 +238,17 @@ export default {
         "Civ",
         "Ctr",
       ],
-      scope: ["Faculty", "Major"],
+      category: ["faculty", "major"],
+      emailRules: [
+        (v) => !!v || "E-mail is required",
+        (v) => /.+@.+\..+/.test(v) || "E-mail must be valid",
+      ],
     };
   },
   methods: {
+    reset() {
+      this.$refs.form.reset();
+    },
     setImageURI(file) {
       this.selectedFile = file.file;
       console.log(this.selectedFile.name);
@@ -147,18 +256,23 @@ export default {
     },
     async onSubmit() {
       this.loading = true;
-      const endpoint = this.scope.toLowerCase();
+      const endpoint = this.form.scope
       axios
         .post(`http://localhost:5000/api/v1/${endpoint}`, this.form)
         .then((res) => {
           console.log(res);
           this.loading = false;
           this.form.name = "";
+          this.form.title = "";
+          this.form.email = "";
+          this.form.phone = "";
+          this.form.hobbies = [];
           this.form.dept = null;
           this.form.loc = "";
           this.form.rank = null;
           this.form.bio = "";
           this.form.img = "";
+          this.form.scope = null;
           this.selectedFile = null;
           this.$router.push({ name: "Directory" });
         })
@@ -173,20 +287,6 @@ export default {
 </script>
 
 <style scoped>
-.row {
-  width: 100vw;
-  height: 100%;
-}
-.col {
-  display: flex;
-  flex: column;
-  width: 85%;
-  max-height: 90vh;
-  margin: auto;
-  padding: 1.2em;
-  justify-content: center;
-  align-items: center;
-}
 .form {
   width: 100%;
 }

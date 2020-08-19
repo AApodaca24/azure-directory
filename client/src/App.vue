@@ -1,9 +1,11 @@
 <template>
   <div id="app">
-    <Nav :routes="links" />
-    <main>
-      <router-view :routes="links" />
-    </main>
+    <v-app>
+      <Nav :routes="links" />
+      <v-main>
+        <router-view :routes="links" />
+      </v-main>
+    </v-app>
   </div>
 </template>
 
@@ -20,14 +22,17 @@ export default {
         {
           title: "Home",
           link: "/",
+          icon: "mdi-home",
         },
         {
           title: "New Entry",
           link: { name: "newForm" },
+          icon: "create",
         },
         {
           title: "Directory",
           link: { name: "Directory" },
+          icon: "dashboard",
         },
       ],
     };
@@ -40,5 +45,6 @@ body {
   margin: 0;
   padding: 0;
   box-sizing: border-box;
+  font-family: roboto;
 }
 </style>
