@@ -13,10 +13,12 @@
               <v-list-item>
                 <v-list-item-content>
                   <v-list-item-title class="headline">
-                    <small style="font-size:.8rem;letter-spacing:.3rem;text-transform:uppercase;">{{ f.rank}}</small><br>
-                    {{
-                     f.name
-                  }}</v-list-item-title>
+                    <small
+                      style="font-size:.8rem;letter-spacing:.3rem;text-transform:uppercase;"
+                      >{{ f.rank }}</small
+                    ><br />
+                    {{ f.name }}</v-list-item-title
+                  >
                   <v-list-item-subtitle>{{ f.title }}</v-list-item-subtitle>
                 </v-list-item-content>
               </v-list-item>
@@ -51,28 +53,28 @@
 export default {
   name: "Card",
   props: {
-    faculty: Array,
+    faculty: Array
   },
   data() {
     return {
-      dept: this.$route.params.dept,
+      dept: this.$route.params.dept
     };
   },
   methods: {
     launchUser(id) {
       this.$router.push({ name: "User", params: { id } });
-    },
+    }
   },
   computed: {
     filteredData() {
-      return this.faculty.filter((f) => f.dept === this.dept);
+      return this.faculty.filter(f => f.dept === this.dept);
     },
     randomColor() {
       return (
         "#" + (0x1000000 + Math.random() * 0xffffff).toString(16).substr(1, 6)
       );
-    },
-  },
+    }
+  }
 };
 </script>
 

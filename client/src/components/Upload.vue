@@ -29,7 +29,6 @@ export default {
   methods: {
     handleFilePondInit: function() {
       console.log("FilePond Initialized");
-      this.$;
     },
     handleSuccess(error, file) {
       if (!error) {

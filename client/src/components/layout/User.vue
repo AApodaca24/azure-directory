@@ -85,9 +85,7 @@
                     >
                       <v-card flat tile class="d-flex">
                         <v-img
-                          :src="
-                            img
-                          "
+                          :src="img"
                           aspect-ratio="1"
                           class="grey lighten-2"
                         >
@@ -122,18 +120,18 @@
 export default {
   name: "User",
   props: {
-    faculty: Array,
+    faculty: Array
   },
   data() {
     return {
-      id: this.$route.params.id,
+      id: this.$route.params.id
     };
   },
   computed: {
     user() {
-      const filtered = this.faculty.filter((f) => f._id === this.id);
+      const filtered = this.faculty.filter(f => f._id === this.id);
       return filtered[0];
-    },
+    }
   },
   methods: {
     goBack() {
@@ -142,10 +140,10 @@ export default {
     navigateto() {
       this.$router.push({
         name: "department",
-        params: { dept: this.user.dept },
+        params: { dept: this.user.dept }
       });
-    },
-  },
+    }
+  }
 };
 </script>
 

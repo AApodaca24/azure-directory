@@ -16,6 +16,14 @@ const facultySchema = new Schema({
     multiImg: Array
 })
 
+const userSchema = new Schema({
+    username: { type: String, required: false },
+    email: { type: String, required: true },
+    password: { type: String, required: true}
+})
+
 const Faculty = mongoose.model('Faculty', facultySchema)
 
-module.exports =  Faculty
+const User = mongoose.model('User', userSchema)
+
+module.exports =  { Faculty, User }

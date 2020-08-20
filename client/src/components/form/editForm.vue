@@ -150,7 +150,11 @@
               <v-row v-if="gallery">
                 <v-flex>
                   <v-container class="mx-auto ma-2" style="width:80%">
-                    <p>Add images to the grey area below. Upload as many as you like up to 10. These images will then display in your profile page.</p>
+                    <p>
+                      Add images to the grey area below. Upload as many as you
+                      like up to 10. These images will then display in your
+                      profile page.
+                    </p>
                   </v-container>
                   <v-container class="mx-auto ma-2" style="width:80%">
                     <multiUpload v-on:set-multiImgURI="setMultiImageURI" />
@@ -183,7 +187,7 @@ export default {
   props: ["faculty", "active"],
   components: {
     Upload,
-    multiUpload,
+    multiUpload
   },
   data() {
     return {
@@ -201,7 +205,7 @@ export default {
         img: this.active.img,
         hobbies: this.active.hobbies,
         scope: this.active.scope,
-        multiImg: [],
+        multiImg: []
       },
       error: false,
       errorText: "",
@@ -233,7 +237,7 @@ export default {
         "DFP",
         "DFPS",
         "DFPY",
-        "DFS",
+        "DFS"
       ],
       classYear: ["2024", "2023", "2022", "2021"],
       rankEnum: [
@@ -251,9 +255,9 @@ export default {
         "SSgt.",
         "SrA.",
         "Civ",
-        "Ctr",
+        "Ctr"
       ],
-      scope: ["Faculty", "Major"],
+      scope: ["Faculty", "Major"]
     };
   },
   methods: {
@@ -278,7 +282,7 @@ export default {
       const id = this.active._id;
       axios
         .put(`http://localhost:5000/api/v1/faculty/${id}`, this.form)
-        .then((res) => {
+        .then(res => {
           console.log(res);
           this.loading = false;
           this.form.name = "";
@@ -291,13 +295,13 @@ export default {
           this.multiImg = [];
           this.$router.push({ name: "Directory" });
         })
-        .catch((err) => {
+        .catch(err => {
           this.loading = false;
           this.error = true;
           this.errorText = err;
         });
-    },
-  },
+    }
+  }
 };
 </script>
 

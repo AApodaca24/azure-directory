@@ -2,13 +2,20 @@
   <div>
     <v-app-bar dark>
       <v-app-bar-nav-icon @click="toggle"></v-app-bar-nav-icon>
+
+      <v-btn v-if="isAuth" @click="logout" color="rgb(0, 43, 92)">Logout</v-btn>
       <v-spacer></v-spacer>
       <v-toolbar-title>myAF</v-toolbar-title>
     </v-app-bar>
     <v-navigation-drawer v-model="drawer" absolute temporary>
       <v-list nav dense>
         <v-list-item-group>
-          <v-list-item v-for="(r, index) in routes" :key="index" :to="r.link">
+          <v-list-item
+            v-for="(r, index) in authRoutes"
+            :key="index"
+            :to="r.link"
+            @click="logout"
+          >
             <v-list-item-icon class="pr-2">
               <v-icon>{{ r.icon }}</v-icon>
             </v-list-item-icon>
@@ -27,6 +34,7 @@ export default {
   name: "Nav",
   props: {
     routes: Array,
+    isAuth: Boolean,
   },
   data() {
     return {
@@ -43,6 +51,16 @@ export default {
           this.drawer = true;
           break;
       }
+    },
+    logout() {
+      this.$emit("set-logout");
+      
+    },
+  },
+  computed: {
+    authRoutes() {
+      let auth = this.routes.filter((route) => route.reqAuth === this.isAuth);
+      return auth;
     },
   },
 };

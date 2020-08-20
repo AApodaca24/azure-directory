@@ -39,6 +39,13 @@ api.put('/faculty/:id', (req, res) => {
   service.updateFaculty(req, res);
 })
 
+api.post('/register', (req, res) => {
+  service.registerUser(req,res)
+})
+api.post('/login', (req, res) => {
+  service.loginUser(req,res)
+})
+
 
 
 api.post('/azure-repo', uploadStrategy, (req, res) => {

@@ -1,9 +1,15 @@
 const fs = require("fs");
 const path = require("path");
+const jwt = require("jsonwebtoken");
+const dotenv = require("dotenv");
+const bcrypt = require("bcrypt");
 
-const Faculty = require("./models");
+const { Faculty, User } = require("./models");
 const ReadPreference = require("mongodb").ReadPreference;
+dotenv.config({ path: "./config/config.env" });
 
+const SECRET = process.env.SECRET;
+console.log(SECRET);
 require("./db").connect();
 
 const getFaculty = (req, res) => {
@@ -27,7 +33,7 @@ const createFaculty = (req, res) => {
     phone: request.phone,
     email: request.email,
     scope: request.scope,
-    hobbies: request.hobbies
+    hobbies: request.hobbies,
   });
   console.log(faculty);
   faculty
@@ -53,7 +59,7 @@ const updateFaculty = (req, res) => {
       f.email = request.email;
       f.scope = request.scope;
       f.hobbies = request.hobbies;
-      f.multiImg = request.multiImg
+      f.multiImg = request.multiImg;
       f.save()
         .then(res.status(200).send(f))
         .catch((err) => res.status(500).json(err));
@@ -78,9 +84,60 @@ const deleteFaculty = async (req, res) => {
   }
 };
 
+const registerUser = async (req, res) => {
+  const { username, email, password } = req.body;
+  const user = new User({
+    username,
+    email,
+    password: bcrypt.hashSync(password, 8),
+  });
+  user
+    .save()
+    .then(() => {
+      const token = jwt.sign({ id: user._id }, SECRET, { expiresIn: 86400 });
+      res.status(200).send({ auth: true, token });
+    })
+    .catch((err) => {
+      console.dir(err);
+      res.status(500).json(err);
+    });
+};
+
+const loginUser = async (req, res) => {
+  const { email, password } = req.body;
+  try {
+    const user = await User.findOne({ email: email.toString() }).exec();
+    console.log(user);
+    if (user === undefined) {
+      res.status(404).send({ auth: false, error: "Not Found" });
+    } else {
+      const valid = bcrypt.compareSync(password, user.password);
+      if (valid === undefined) {
+        res.status(404).send({ auth: false, error: "passwords dont match" });
+      } else {
+        const token = jwt.sign({ id: user._id }, SECRET, { expiresIn: 86400 });
+        res.status(200).send({
+          auth: true,
+          token,
+          _user: {
+            id: user._id,
+            username: user.username,
+            email: user.email,
+          },
+        });
+      }
+    }
+  } catch (err) {
+    console.log(err);
+    res.status(500).send(err);
+  }
+};
+
 module.exports = {
   getFaculty,
   createFaculty,
   updateFaculty,
   deleteFaculty,
+  registerUser,
+  loginUser,
 };

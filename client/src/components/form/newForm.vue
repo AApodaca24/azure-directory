@@ -169,7 +169,7 @@ import Upload from "../Upload";
 export default {
   name: "newForm",
   components: {
-    Upload,
+    Upload
   },
   data() {
     return {
@@ -186,7 +186,7 @@ export default {
         bio: "",
         img: "",
         hobbies: [],
-        scope: null,
+        scope: null
       },
       error: false,
       errorText: "",
@@ -218,7 +218,7 @@ export default {
         "DFP",
         "DFPS",
         "DFPY",
-        "DFS",
+        "DFS"
       ],
       classYear: ["2024", "2023", "2022", "2021"],
       rankEnum: [
@@ -236,13 +236,13 @@ export default {
         "SSgt.",
         "SrA.",
         "Civ",
-        "Ctr",
+        "Ctr"
       ],
       category: ["faculty", "major"],
       emailRules: [
-        (v) => !!v || "E-mail is required",
-        (v) => /.+@.+\..+/.test(v) || "E-mail must be valid",
-      ],
+        v => !!v || "E-mail is required",
+        v => /.+@.+\..+/.test(v) || "E-mail must be valid"
+      ]
     };
   },
   methods: {
@@ -256,10 +256,10 @@ export default {
     },
     async onSubmit() {
       this.loading = true;
-      const endpoint = this.form.scope
+      const endpoint = this.form.scope;
       axios
         .post(`http://localhost:5000/api/v1/${endpoint}`, this.form)
-        .then((res) => {
+        .then(res => {
           console.log(res);
           this.loading = false;
           this.form.name = "";
@@ -276,13 +276,13 @@ export default {
           this.selectedFile = null;
           this.$router.push({ name: "Directory" });
         })
-        .catch((err) => {
+        .catch(err => {
           this.loading = false;
           this.error = true;
           this.errorText = err;
         });
-    },
-  },
+    }
+  }
 };
 </script>
 

@@ -35,7 +35,7 @@ export default {
         console.log(file);
         this.$emit("set-multiImgURI", file);
       } else {
-          console.log(error, file)
+        console.log(error, file);
       }
     }
   },

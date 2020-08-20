@@ -89,18 +89,19 @@ export default {
   props: ["faculty"],
   data() {
     return {
+      search: '',
       headers: [
         {
           text: "Department",
-          value: "dept",
+          value: "dept"
         },
         { text: "Name", value: "name", align: "start", sortable: true },
         { text: "Rank/Grade", value: "rank" },
         { text: "Location", value: "loc" },
-        { text: "Action", value: "action" },
-      ],
+        { text: "Action", value: "action" }
+      ]
     };
-  },
+  }
 };
 </script>
 

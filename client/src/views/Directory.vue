@@ -1,14 +1,14 @@
 <template>
   <div class="center">
-        <main>
-          <router-view
-            :faculty="faculty"
-            v-on:set-active="setActiveRecord"
-            v-on:delete-item="deleteActiveRecord"
-            v-on:navigate-to="navigateToUser"
-            :active="activeRecord ? activeRecord[0] : ''"
-          />
-        </main>
+    <main>
+      <router-view
+        :faculty="faculty"
+        v-on:set-active="setActiveRecord"
+        v-on:delete-item="deleteActiveRecord"
+        v-on:navigate-to="navigateToUser"
+        :active="activeRecord ? activeRecord[0] : ''"
+      />
+    </main>
   </div>
 </template>
 
@@ -17,6 +17,10 @@ import axios from "axios";
 
 export default {
   name: "Directory",
+  props: {
+    isAuth: Boolean,
+    User: Object,
+  },
   data() {
     return {
       loading: false,
@@ -24,7 +28,7 @@ export default {
       errorText: "",
       faculty: [],
       activeRecord: null,
-      myFiles: []
+      myFiles: [],
     };
   },
   beforeRouteUpdate(to, from, next) {
@@ -33,6 +37,7 @@ export default {
     next();
   },
   methods: {
+    
     successUpload(event) {
       this.$vs.notify({ color: "success", title: "Upload Success" });
       console.log(event);
@@ -51,27 +56,27 @@ export default {
       }
     },
     setActiveRecord(id) {
-      const filtered = this.faculty.filter(f => id === f._id);
+      const filtered = this.faculty.filter((f) => id === f._id);
       this.activeRecord = filtered;
       this.$router.push({ name: "editForm" });
     },
     deleteActiveRecord(id) {
       axios
         .delete(`http://localhost:5000/api/v1/faculty/${id}`)
-        .then(res => {
-          console.log(res)
-          this.$router.push()
+        .then((res) => {
+          console.log(res);
+          this.$router.push();
         })
-        .catch(err => console.log(err));
+        .catch((err) => console.log(err));
       this.getData();
     },
     navigateToUser(id) {
       this.$router.push({ name: "User", params: { id } });
-    }
+    },
   },
   created() {
     this.getData();
-  }
+  },
 };
 </script>
 

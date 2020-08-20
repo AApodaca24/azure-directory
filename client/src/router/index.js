@@ -2,6 +2,8 @@ import Vue from "vue";
 import VueRouter from "vue-router";
 import Home from "../views/Home.vue";
 import Directory from "../views/Directory.vue";
+import Register from "../views/Register.vue";
+import Login from "../views/Login.vue";
 import Table from "../components/Table.vue";
 import newForm from "../components/form/newForm.vue";
 import editForm from "../components/form/editForm.vue";
@@ -26,6 +28,16 @@ const routes = [
       { path: "edit", name: "editForm", component: editForm },
       { path: ":id", name: "User", component: User }
     ]
+  },
+  {
+    path: "/register",
+    name: "register",
+    component: Register
+  },
+  {
+    path: '/login',
+    name: "login",
+    component: Login
   }
 ];
 
