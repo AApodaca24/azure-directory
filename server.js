@@ -18,7 +18,7 @@ const allowCrossDomain = function (req, res, next) {
   next();
 };
 
-app.use(allowCrossDomain);
+// app.use(allowCrossDomain);
 
 app.use(cors());
 app.use(morgan("dev"));
