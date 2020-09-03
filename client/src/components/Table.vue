@@ -89,7 +89,7 @@ export default {
   props: ["faculty"],
   data() {
     return {
-      search: '',
+      search: "",
       headers: [
         {
           text: "Department",

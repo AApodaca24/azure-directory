@@ -5,8 +5,22 @@
         <h1>Welcome to the Faculty Directory App</h1>
         <p>Here you can view and add members to view anywhere.</p>
         <div>
-          <v-btn class="ma-2" tile color="rgb(0, 43, 92)" :to="{ name: 'register' }" dark>Register</v-btn>
-          <v-btn class="ma-2" tile color="rgb(0, 43, 92)" :to="{ name: 'login' }" dark>Login</v-btn>
+          <v-btn
+            class="ma-2"
+            tile
+            color="rgb(0, 43, 92)"
+            :to="{ name: 'register' }"
+            dark
+            >Register</v-btn
+          >
+          <v-btn
+            class="ma-2"
+            tile
+            color="rgb(0, 43, 92)"
+            :to="{ name: 'login' }"
+            dark
+            >Login</v-btn
+          >
         </div>
       </div>
     </section>

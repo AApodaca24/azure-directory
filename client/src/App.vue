@@ -3,7 +3,13 @@
     <v-app>
       <Nav :routes="links" :isAuth="auth" v-on:set-logout="logoutUser" />
       <v-main>
-        <router-view :routes="links" v-on:set-auth="setAuth" :isAuth="auth" />
+        <router-view
+          :routes="links"
+          v-on:set-auth="setAuth"
+          v-on:set-msalAuth="setMsalAuth"
+          :isAuth="auth"
+          :token="token"
+        />
       </v-main>
     </v-app>
   </div>
@@ -14,63 +20,66 @@ import Nav from "./components/layout/Nav";
 
 export default {
   components: {
-    Nav
+    Nav,
   },
   data() {
     return {
       auth: false,
+      token: window.sessionStorage.getItem("msal.idtoken") || "",
       loggedInUser: null,
       links: [
         {
           title: "Home",
           link: "/",
           icon: "mdi-home",
-          reqAuth: false
+          reqAuth: false,
         },
         {
           title: "Register",
-          link: { name: "register"},
+          link: { name: "register" },
           icon: "how_to_reg",
-          reqAuth: false
+          reqAuth: false,
         },
         {
           title: "Login",
-          link: { name: "login"},
+          link: { name: "login" },
           icon: "face",
-          reqAuth: false
+          reqAuth: false,
         },
         {
           title: "Logout",
-          link: '',
+          link: "",
           icon: "keyboard_return",
-          reqAuth: true
+          reqAuth: true,
         },
         {
           title: "New Entry",
           link: { name: "newForm" },
           icon: "create",
-          reqAuth: true
+          reqAuth: true,
         },
         {
           title: "Directory",
           link: { name: "Directory" },
           icon: "dashboard",
-          reqAuth: true
-        }
-      ]
+          reqAuth: true,
+        },
+      ],
     };
   },
   methods: {
     setAuth(user) {
-      this.auth = true
-      this.loggedInUser = user
+      this.auth = true;
+      this.loggedInUser = user;
     },
     logoutUser() {
-      this.auth = false,
-      this.loggedInUser= ''
-      this.$router.push({ name: 'Home'})
-    }
-  }
+      (this.auth = false), (this.loggedInUser = "");
+      this.$router.push({ name: "Home" });
+    },
+    setMsalAuth() {
+      this.auth = true;
+    },
+  },
 };
 </script>
 

@@ -34,11 +34,11 @@ export default {
   name: "Nav",
   props: {
     routes: Array,
-    isAuth: Boolean,
+    isAuth: Boolean
   },
   data() {
     return {
-      drawer: false,
+      drawer: false
     };
   },
   methods: {
@@ -54,15 +54,14 @@ export default {
     },
     logout() {
       this.$emit("set-logout");
-      
-    },
+    }
   },
   computed: {
     authRoutes() {
-      let auth = this.routes.filter((route) => route.reqAuth === this.isAuth);
+      let auth = this.routes.filter(route => route.reqAuth === this.isAuth);
       return auth;
-    },
-  },
+    }
+  }
 };
 </script>
 

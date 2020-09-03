@@ -35,7 +35,7 @@ export default {
         console.log(file);
         this.$emit("set-imgURI", file);
       } else {
-        console.log(error)
+        console.log(error);
       }
     }
   },

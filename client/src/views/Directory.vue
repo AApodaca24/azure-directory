@@ -20,6 +20,7 @@ export default {
   props: {
     isAuth: Boolean,
     User: Object,
+    token: String
   },
   data() {
     return {
@@ -28,7 +29,7 @@ export default {
       errorText: "",
       faculty: [],
       activeRecord: null,
-      myFiles: [],
+      myFiles: []
     };
   },
   beforeRouteUpdate(to, from, next) {
@@ -37,7 +38,6 @@ export default {
     next();
   },
   methods: {
-    
     successUpload(event) {
       this.$vs.notify({ color: "success", title: "Upload Success" });
       console.log(event);
@@ -56,27 +56,27 @@ export default {
       }
     },
     setActiveRecord(id) {
-      const filtered = this.faculty.filter((f) => id === f._id);
+      const filtered = this.faculty.filter(f => id === f._id);
       this.activeRecord = filtered;
       this.$router.push({ name: "editForm" });
     },
     deleteActiveRecord(id) {
       axios
         .delete(`https://directoryappdf.azurewebsites.net/api/v1/faculty/${id}`)
-        .then((res) => {
+        .then(res => {
           console.log(res);
           this.$router.push();
         })
-        .catch((err) => console.log(err));
+        .catch(err => console.log(err));
       this.getData();
     },
     navigateToUser(id) {
       this.$router.push({ name: "User", params: { id } });
-    },
+    }
   },
   created() {
     this.getData();
-  },
+  }
 };
 </script>
 

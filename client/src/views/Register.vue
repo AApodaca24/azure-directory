@@ -11,6 +11,7 @@
                   <v-alert v-if="error" type="error">
                     {{ errorMsg }}
                   </v-alert>
+                  <h1>Register</h1>
                   <v-text-field
                     v-model="form.email"
                     :rules="emailRules"
@@ -54,14 +55,14 @@ export default {
       errorMsg: "",
       form: {
         email: "",
-        password: "",
+        password: ""
       },
       e1: true,
-      passwordRules: [(v) => !!v || "Password is required"],
+      passwordRules: [v => !!v || "Password is required"],
       emailRules: [
-        (v) => !!v || "E-mail is required",
-        (v) => /.+@.+\..+/.test(v) || "E-mail must be valid",
-      ],
+        v => !!v || "E-mail is required",
+        v => /.+@.+\..+/.test(v) || "E-mail must be valid"
+      ]
     };
   },
   methods: {
@@ -86,8 +87,8 @@ export default {
         this.form.email = "";
         this.form.password = "";
       }
-    },
-  },
+    }
+  }
 };
 </script>
 
