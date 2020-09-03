@@ -218,6 +218,7 @@ export default {
         "DFP",
         "DFPS",
         "DFPY",
+        "DFR",
         "DFS"
       ],
       classYear: ["2024", "2023", "2022", "2021"],
@@ -252,7 +253,7 @@ export default {
     setImageURI(file) {
       this.selectedFile = file.file;
       console.log(this.selectedFile.name);
-      this.form.img = `https://directoryimages.blob.core.windows.net/assets/${this.selectedFile.name}`;
+      this.form.img = `https://dfimages001.blob.core.windows.net/dfdirectory/${this.selectedFile.name}`;
     },
     async onSubmit() {
       this.loading = true;

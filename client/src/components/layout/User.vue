@@ -61,7 +61,7 @@
               </v-row>
               <v-row>
                 <v-container style="padding:0 2rem">
-                  <div v-html="user.bio"></div>
+                  <div v-html="user.bio" style="line-height:2rem;letter-spacing:1px;"></div>
                 </v-container>
               </v-row>
               <v-row style="padding:1rem 0 2rem 2rem">
@@ -70,12 +70,12 @@
                 </v-chip>
               </v-row>
               <v-row>
-                <v-container>
+                <v-container v-if="user.multiImg.length < 0">
                   <h1>{{ user.name + `'s Gallery` }}</h1>
                 </v-container>
               </v-row>
               <v-row>
-                <v-container fluid>
+                <v-container fluid v-if="user.multiImg.length < 0">
                   <v-row>
                     <v-col
                       v-for="(img, index) in user.multiImg"

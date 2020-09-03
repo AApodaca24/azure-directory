@@ -10,7 +10,7 @@ const blobServiceClient = BlobServiceClient.fromConnectionString(
   AZURE_STORAGE_CONNECTION_STRING
 );
 // Get a reference to a container
-const containerClient = blobServiceClient.getContainerClient("assets");
+const containerClient = blobServiceClient.getContainerClient("dfdirectory");
 
 const getStream = require("into-stream");
 
