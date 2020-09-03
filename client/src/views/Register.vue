@@ -68,7 +68,7 @@ export default {
     async onSubmit() {
       try {
         const res = await axios.post(
-          "http://localhost:5000/api/v1/register",
+          "https://directoryappdf.azurewebsites.net/api/v1/register",
           this.form
         );
         console.log(res);

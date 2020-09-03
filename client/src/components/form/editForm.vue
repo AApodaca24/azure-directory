@@ -287,7 +287,7 @@ export default {
       this.loading = true;
       const id = this.active._id;
       axios
-        .put(`http://localhost:5000/api/v1/faculty/${id}`, this.form)
+        .put(`https://directoryappdf.azurewebsites.net/api/v1/faculty/${id}`, this.form)
         .then(res => {
           console.log(res);
           this.loading = false;

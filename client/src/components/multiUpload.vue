@@ -5,7 +5,7 @@
       ref="pond"
       label-idle="Drop files here..."
       allow-multiple="true"
-      server="http://localhost:5000/api/v1/azure-repo"
+      server="https://directoryappdf.azurewebsites.net/api/v1/azure-repo"
       v-bind:files="myFiles"
       v-on:init="handleFilePondInit"
       v-on:processfile="handleFile"

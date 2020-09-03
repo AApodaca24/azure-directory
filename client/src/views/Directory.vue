@@ -46,7 +46,7 @@ export default {
       this.loading = true;
       try {
         const { data } = await axios.get(
-          "http://localhost:5000/api/v1/faculty"
+          "https://directoryappdf.azurewebsites.net/api/v1/faculty"
         );
         this.faculty = data;
       } catch (error) {
@@ -62,7 +62,7 @@ export default {
     },
     deleteActiveRecord(id) {
       axios
-        .delete(`http://localhost:5000/api/v1/faculty/${id}`)
+        .delete(`https://directoryappdf.azurewebsites.net/api/v1/faculty/${id}`)
         .then((res) => {
           console.log(res);
           this.$router.push();

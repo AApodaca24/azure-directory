@@ -259,7 +259,7 @@ export default {
       this.loading = true;
       const endpoint = this.form.scope;
       axios
-        .post(`http://localhost:5000/api/v1/${endpoint}`, this.form)
+        .post(`https://directoryappdf.azurewebsites.net/api/v1/${endpoint}`, this.form)
         .then(res => {
           console.log(res);
           this.loading = false;
