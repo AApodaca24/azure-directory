@@ -58,7 +58,6 @@ router.post('/openid/return',
 router.get('/logout', function(req, res){
   req.session.destroy(function(err) {
     req.logOut();
-    res.redirect(config.destroySessionUrl);
   });
 });
 

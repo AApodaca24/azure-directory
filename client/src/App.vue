@@ -77,7 +77,7 @@ export default {
       this.$router.push({ name: "Home" });
     },
     setMsalAuth() {
-      this.auth = true;
+      this.auth = !this.auth;
     },
   },
 };

@@ -61,53 +61,6 @@
 
 <script>
 import axios from "axios";
-import * as msal from "msal";
-const msalConfig = {
-  auth: {
-    clientId: "7ac7882a-8b46-412d-8009-8f6455fa4dbc",
-    redirectUri: "https://directoryappdf.azurewebsites.net/login",
-  },
-  cache: {
-    cacheLocation: "sessionStorage", // This configures where your cache will be stored
-    storeAuthStateInCookie: false, // Set this to "true" if you are having issues on IE11 or Edge
-  },
-  system: {
-    loggerOptions: {
-      loggerCallback: (level, message, containsPii) => {
-        if (containsPii) {
-          return;
-        }
-        switch (level) {
-          case msal.LogLevel.Error:
-            console.error(message);
-            return;
-          case msal.LogLevel.Info:
-            console.info(message);
-            return;
-          case msal.LogLevel.Verbose:
-            console.debug(message);
-            return;
-          case msal.LogLevel.Warning:
-            console.warn(message);
-            return;
-        }
-      },
-    },
-  },
-};
-const loginRequest = {
-  scopes: ["User.Read"],
-};
-
-const msalInstance = new msal.UserAgentApplication(msalConfig);
-msalInstance.handleRedirectCallback((error, response) => {
-  // handle redirect response or error
-  if (!error) {
-    console.log(response);
-  } else {
-    console.log(error);
-  }
-});
 
 export default {
   name: "Login",
@@ -155,7 +108,7 @@ export default {
     },
     async msLogin() {
       try {
-        await msalInstance.loginRedirect(loginRequest);
+        await axios.get("https://directoryappdf.azurewebsites.net/auth/login");
       } catch (err) {
         this.error = true;
         this.errorMsg = err;
@@ -164,6 +117,18 @@ export default {
       }
       this.$emit("set-msalAuth");
       this.$router.push({ name: "Directory" });
+    },
+    async msLogout() {
+      try {
+        await axios.get("https://directoryappdf.azurewebsites.net/auth/logout");
+      } catch (err) {
+        this.error = true;
+        this.errorMsg = err;
+        this.form.email = "";
+        this.form.password = "";
+      }
+      this.$emit("set-msalAuth");
+      this.$router.push({ name: "Home" });
     },
   },
 };
