@@ -68,7 +68,7 @@
                 </v-container>
               </v-row>
               <v-row style="padding:1rem 0 2rem 2rem">
-                <v-chip v-for="(a, index) in user.hobbies" :key="index">
+                <v-chip v-for="(a, index) in user.hobbies" :key="index" style="margin: 0 .2rem;">
                   {{ a }}
                 </v-chip>
               </v-row>
@@ -157,7 +157,7 @@ export default {
 
 .img {
   height: 100%;
-  width: 33%;
+  /* width: 33%; */
 }
 
 .img img {
