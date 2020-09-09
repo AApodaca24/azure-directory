@@ -5,20 +5,29 @@
         <v-container>
           <v-row>
             <v-flex xs12>
-              <v-card>
-                <v-text-field
-                  v-model="search"
-                  label="Search name"
-                  solo
-                  class="pa-5"
-                ></v-text-field>
-                <div  v-if="filteredData.length >= 9" class="text-center">
-                  <v-pagination v-model="currentPage" :length="filteredData.length / perPage" v-on:next="this.currentPage ++" v-on:previous="this.currentPage --"></v-pagination>
-                </div>
-              </v-card>
+              <v-text-field
+                outlined
+                v-model="search"
+                label="Search name"
+                class="px-5 pt-2"
+              ></v-text-field>
             </v-flex>
           </v-row>
-          <v-flex row wrap justify-center style="min-width:100;margin:0 auto;">
+          <div class="text-center">
+            <v-pagination
+              v-model="currentPage"
+              :length="pageCount"
+              v-on:next="this.currentPage++"
+              v-on:previous="this.currentPage--"
+            ></v-pagination>
+          </div>
+          <v-flex
+            row
+            wrap
+            justify-center
+            style="min-width:100;margin:0 auto;align-items:center;"
+            class="pa-5"
+          >
             <v-card
               max-width="250"
               class="ma-5"
@@ -73,8 +82,8 @@ export default {
   data() {
     return {
       dept: this.$route.params.dept,
-      perPage: 10,
-      currentPage: 0,
+      perPage: 5,
+      currentPage: 1,
       search: "",
     };
   },
@@ -85,7 +94,7 @@ export default {
   },
   computed: {
     pageCount() {
-      let i = this.filteredData.length;
+      let i = this.faculty.length;
       let s = this.perPage;
       return Math.ceil(i / s);
     },
@@ -97,7 +106,7 @@ export default {
         );
         return searchFaculty;
       } else {
-        const start = this.currentPage * this.perPage;
+        const start = (this.currentPage - 1) * this.perPage;
         const end = start + this.perPage;
         return deptFaculty.slice(start, end);
       }
