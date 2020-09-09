@@ -3,7 +3,7 @@
     <v-app-bar dark>
       <v-app-bar-nav-icon @click="toggle"></v-app-bar-nav-icon>
 
-      <v-btn v-if="isAuth" @click="logout" color="rgb(0, 43, 92)">Logout</v-btn>
+      <v-btn v-if="isAuth" @click="$msal.signOut()" color="rgb(0, 43, 92)">Logout</v-btn>
       <v-spacer></v-spacer>
       <v-toolbar-title>myAF</v-toolbar-title>
     </v-app-bar>
@@ -14,7 +14,6 @@
             v-for="(r, index) in authRoutes"
             :key="index"
             :to="r.link"
-            @click="logout"
           >
             <v-list-item-icon class="pr-2">
               <v-icon>{{ r.icon }}</v-icon>
@@ -52,9 +51,6 @@ export default {
           break;
       }
     },
-    logout() {
-      this.$emit("set-logout");
-    }
   },
   computed: {
     authRoutes() {

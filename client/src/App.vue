@@ -3,13 +3,7 @@
     <v-app>
       <Nav :routes="links" :isAuth="auth" v-on:set-logout="logoutUser" />
       <v-main>
-        <router-view
-          :routes="links"
-          v-on:set-auth="setAuth"
-          v-on:set-msalAuth="setMsalAuth"
-          :isAuth="auth"
-          :token="token"
-        />
+        <router-view :routes="links" v-on:set-auth="setAuth" :isAuth="auth" />
       </v-main>
     </v-app>
   </div>
@@ -24,8 +18,7 @@ export default {
   },
   data() {
     return {
-      auth: false,
-      token: window.sessionStorage.getItem("msal.idtoken") || "",
+      auth: this.$msal.isAuthenticated(),
       loggedInUser: null,
       links: [
         {
@@ -47,12 +40,6 @@ export default {
           reqAuth: false,
         },
         {
-          title: "Logout",
-          link: "",
-          icon: "keyboard_return",
-          reqAuth: true,
-        },
-        {
           title: "New Entry",
           link: { name: "newForm" },
           icon: "create",
@@ -68,16 +55,12 @@ export default {
     };
   },
   methods: {
-    setAuth(user) {
-      this.auth = true;
-      this.loggedInUser = user;
+    setAuth() {
+      this.$msal.signIn();
     },
     logoutUser() {
       (this.auth = false), (this.loggedInUser = "");
       this.$router.push({ name: "Home" });
-    },
-    setMsalAuth() {
-      this.auth = !this.auth;
     },
   },
 };

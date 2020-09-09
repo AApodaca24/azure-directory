@@ -7,6 +7,7 @@
         <div>
           <v-btn
             class="ma-2"
+            v-if="!isAuth"
             tile
             color="rgb(0, 43, 92)"
             :to="{ name: 'register' }"
@@ -15,11 +16,29 @@
           >
           <v-btn
             class="ma-2"
+            v-if="!isAuth"
             tile
             color="rgb(0, 43, 92)"
             :to="{ name: 'login' }"
             dark
             >Login</v-btn
+          >
+           <v-btn
+            class="ma-2"
+            v-if="isAuth"
+            tile
+            color="rgb(0, 43, 92)"
+            :to="{ name: 'Directory' }"
+            dark
+            >Directory</v-btn
+          > <v-btn
+            class="ma-2"
+            v-if="isAuth"
+            tile
+            color="rgb(0, 43, 92)"
+            dark
+            @click="$msal.signOut()"
+            >Logout</v-btn
           >
         </div>
       </div>
@@ -33,7 +52,8 @@
 export default {
   name: "Home",
   props: {
-    routes: Array
+    routes: Array,
+    isAuth: Boolean
   }
 };
 </script>

@@ -47,7 +47,7 @@
               tile
               dark
               color="rgb(0, 43, 92)"
-              @click="msLogin"
+              @click="login"
             >
               <v-icon left>mdi-microsoft</v-icon> Sign-In
             </v-btn>
@@ -106,30 +106,9 @@ export default {
         this.form.password = "";
       }
     },
-    async msLogin() {
-      try {
-        await axios.get("https://directoryappdf.azurewebsites.net/auth/login");
-      } catch (err) {
-        this.error = true;
-        this.errorMsg = err;
-        this.form.email = "";
-        this.form.password = "";
-      }
-      this.$emit("set-msalAuth");
-      this.$router.push({ name: "Directory" });
-    },
-    async msLogout() {
-      try {
-        await axios.get("https://directoryappdf.azurewebsites.net/auth/logout");
-      } catch (err) {
-        this.error = true;
-        this.errorMsg = err;
-        this.form.email = "";
-        this.form.password = "";
-      }
-      this.$emit("set-msalAuth");
-      this.$router.push({ name: "Home" });
-    },
+    login() {
+      this.$emit('set-auth')
+    }
   },
 };
 </script>
