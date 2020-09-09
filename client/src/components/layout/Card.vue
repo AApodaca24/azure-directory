@@ -1,12 +1,27 @@
 <template>
   <div class="card-wrapper">
     <v-row>
-      <v-col cols="10" class="mx-auto">
+      <v-col cols="10" class="mx-auto" style="min-height: 100vh;width:100%">
         <v-container>
-          <v-flex row wrap xs12>
+          <v-row>
+            <v-flex xs12>
+              <v-card>
+                <v-text-field
+                  v-model="search"
+                  label="Search name"
+                  solo
+                  class="pa-5"
+                ></v-text-field>
+                <div  v-if="filteredData.length >= 9" class="text-center">
+                  <v-pagination v-model="currentPage" :length="filteredData.length / perPage" v-on:next="this.currentPage ++" v-on:previous="this.currentPage --"></v-pagination>
+                </div>
+              </v-card>
+            </v-flex>
+          </v-row>
+          <v-flex row wrap justify-center style="min-width:100;margin:0 auto;">
             <v-card
               max-width="250"
-              class="mx-auto ma-2"
+              class="ma-5"
               v-for="f in filteredData"
               :key="f.id"
             >
@@ -53,28 +68,46 @@
 export default {
   name: "Card",
   props: {
-    faculty: Array
+    faculty: Array,
   },
   data() {
     return {
-      dept: this.$route.params.dept
+      dept: this.$route.params.dept,
+      perPage: 10,
+      currentPage: 0,
+      search: "",
     };
   },
   methods: {
     launchUser(id) {
       this.$router.push({ name: "User", params: { id } });
-    }
+    },
   },
   computed: {
+    pageCount() {
+      let i = this.filteredData.length;
+      let s = this.perPage;
+      return Math.ceil(i / s);
+    },
     filteredData() {
-      return this.faculty.filter(f => f.dept === this.dept);
+      const deptFaculty = this.faculty.filter((f) => f.dept === this.dept);
+      if (this.search.length > 0) {
+        const searchFaculty = deptFaculty.filter((f) =>
+          f.name.toLowerCase().includes(this.search.toLowerCase())
+        );
+        return searchFaculty;
+      } else {
+        const start = this.currentPage * this.perPage;
+        const end = start + this.perPage;
+        return deptFaculty.slice(start, end);
+      }
     },
     randomColor() {
       return (
         "#" + (0x1000000 + Math.random() * 0xffffff).toString(16).substr(1, 6)
       );
-    }
-  }
+    },
+  },
 };
 </script>
 

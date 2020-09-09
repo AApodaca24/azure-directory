@@ -74,7 +74,7 @@
               </v-row>
               <v-row>
                 <v-container v-if="user.multiImg.length > 0">
-                  <h1>{{ user.name + `'s Gallery` }}</h1>
+                  <h1 class="pl-5">{{ user.name + `'s Gallery` }}</h1>
                 </v-container>
               </v-row>
               <v-row>

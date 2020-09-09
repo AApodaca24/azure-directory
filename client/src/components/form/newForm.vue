@@ -115,7 +115,6 @@
                 >
                 <v-stepper-content step="3">
                   <v-card
-                    color="grey lighten-3"
                     style="margin-bottom:2rem;"
                     height="380px"
                   >
@@ -129,7 +128,8 @@
                           multiple
                           chips
                         ></v-combobox>
-                        <div class="upload">
+                        <div class="upload" style="text-align: center; width: 100%; margin: 0 auto;">
+                          <h4>Upload your image here</h4>
                           <Upload v-on:set-imgURI="setImageURI" />
                         </div>
                       </v-col>
