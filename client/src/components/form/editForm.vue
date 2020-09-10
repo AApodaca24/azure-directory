@@ -288,7 +288,7 @@ export default {
       const id = this.active._id;
       axios
         .put(
-          `https://directoryappdf.azurewebsites.net/api/v1/faculty/${id}`,
+          `https://dfdirectory.azurewebsites.net/api/v1/faculty/${id}`,
           this.form
         )
         .then(res => {
