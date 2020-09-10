@@ -85,7 +85,7 @@ export default {
     async onSubmit() {
       try {
         const res = await axios.post(
-          "https://directoryappdf.azurewebsites.net/api/v1/login",
+          "https://dfdirectory.azurewebsites.net/api/v1/login",
           this.form
         );
         console.log(res);

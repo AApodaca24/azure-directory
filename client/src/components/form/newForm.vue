@@ -253,14 +253,14 @@ export default {
     setImageURI(file) {
       this.selectedFile = file.file;
       console.log(this.selectedFile.name);
-      this.form.img = `https://dfimages001.blob.core.windows.net/dfdirectory/${this.selectedFile.name}`;
+      this.form.img = `https://dfimages01.blob.core.windows.net/dfdirectory/${this.selectedFile.name}`;
     },
     async onSubmit() {
       this.loading = true;
       const endpoint = this.form.scope;
       axios
         .post(
-          `https://directoryappdf.azurewebsites.net/api/v1/${endpoint}`,
+          `https://dfdirectory.azurewebsites.net/api/v1/${endpoint}`,
           this.form
         )
         .then(res => {
