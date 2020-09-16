@@ -130,6 +130,14 @@ export default {
       id: this.$route.params.id
     };
   },
+    beforeRouteUpdate (to, from, next) {
+    // called before the route that renders this component is confirmed.
+    // does NOT have access to `this` component instance,
+    // because it has not been created yet when this guard is called!
+    console.log(to, from)
+    this.id = to.params.id
+    next()
+  },
   computed: {
     user() {
       const filtered = this.faculty.filter(f => f._id === this.id);

@@ -75,7 +75,7 @@
 
 <script>
 export default {
-  name: "Card",
+  name: 'Card',
   props: {
     faculty: Array,
   },
@@ -84,12 +84,22 @@ export default {
       dept: this.$route.params.dept,
       perPage: 5,
       currentPage: 1,
-      search: "",
+      search: '',
+      filtered: [],
     };
   },
+  beforeRouteUpdate (to, from, next) {
+    // called before the route that renders this component is confirmed.
+    // does NOT have access to `this` component instance,
+    // because it has not been created yet when this guard is called!
+    console.log(to, from)
+    this.dept = to.params.dept
+    next()
+  },
+
   methods: {
     launchUser(id) {
-      this.$router.push({ name: "User", params: { id } });
+      this.$router.push({ name: 'User', params: { id } });
     },
   },
   computed: {
@@ -99,10 +109,10 @@ export default {
       return Math.ceil(i / s);
     },
     filteredData() {
-      const deptFaculty = this.faculty.filter((f) => f.dept === this.dept);
+      const deptFaculty = this.faculty.filter(f => f.dept === this.dept);
       if (this.search.length > 0) {
-        const searchFaculty = deptFaculty.filter((f) =>
-          f.name.toLowerCase().includes(this.search.toLowerCase())
+        const searchFaculty = deptFaculty.filter(f =>
+          f.name.toLowerCase().includes(this.search.toLowerCase()),
         );
         return searchFaculty;
       } else {
@@ -113,7 +123,7 @@ export default {
     },
     randomColor() {
       return (
-        "#" + (0x1000000 + Math.random() * 0xffffff).toString(16).substr(1, 6)
+        '#' + (0x1000000 + Math.random() * 0xffffff).toString(16).substr(1, 6)
       );
     },
   },
