@@ -46,7 +46,7 @@
                   <v-list-item-subtitle>{{ f.title }}</v-list-item-subtitle>
                 </v-list-item-content>
               </v-list-item>
-              <v-img :src="f.img" height="200"></v-img>
+              <v-img :src="f.img" height="300"></v-img>
 
               <v-list-item three-line>
                 <v-list-item-content>
