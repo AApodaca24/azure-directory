@@ -63,7 +63,7 @@
                 <v-container style="padding:0 2rem">
                   <div
                     v-html="user.bio"
-                    style="line-height:2rem;letter-spacing:1px;"
+                    style="line-height:2rem;letter-spacing:1px;font-weight:700;"
                   ></div>
                 </v-container>
               </v-row>

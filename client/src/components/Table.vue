@@ -18,7 +18,7 @@
                     If you would like to see the listings by department click
                     on the departments menu for a list of departments
                   </p>
-                  <v-select v-model="selectedDept" :items="deptsEnum" label="Department" solo></v-select>
+                  <v-select v-model="selectedDept" :items="deptsEnum" label="Department" solo clearable=true></v-select>
                 </v-container>
                 <v-container>
                   <v-btn
@@ -143,7 +143,7 @@ export default {
   },
   computed: {
     deptFaculty() {
-      if (this.selectedDept === null) {
+      if (this.selectedDept === null || this.selectedDept === undefined) {
         return this.faculty
       } else {
         const filtered = this.faculty.filter(f => f.dept === this.selectedDept)
