@@ -23,10 +23,10 @@ const routes = [
     component: Directory,
     children: [
       { path: "", name: "Directory", component: Table },
+      { path: "user/:id", name: "User", component: User },
       { path: ":dept", name: "department", component: Card },
       { path: "new", name: "newForm", component: newForm },
-      { path: "edit", name: "editForm", component: editForm },
-      { path: ":id", name: "User", component: User }
+      { path: "edit", name: "editForm", component: editForm }
     ]
   },
   {
