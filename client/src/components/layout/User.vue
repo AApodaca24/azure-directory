@@ -60,9 +60,10 @@
                 </v-flex>
               </v-row>
               <v-row>
-                <v-container style="padding:0 2rem">
+                <v-container >
                   <div
                     v-html="user.bio"
+                    class="ma-10 px-10"
                     style="line-height:2rem;letter-spacing:1px;font-weight:700;"
                   ></div>
                 </v-container>
