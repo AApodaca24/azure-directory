@@ -104,7 +104,7 @@ export default {
   },
   computed: {
     pageCount() {
-      let i = this.faculty.length;
+      let i = this.filteredData.length;
       let s = this.perPage;
       return Math.ceil(i / s);
     },
