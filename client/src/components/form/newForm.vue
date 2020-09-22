@@ -244,6 +244,11 @@ export default {
         "SrA.",
         "A1C",
         "Amn",
+        "Prof.",
+        "Dr.",
+        "Mr.",
+        "Ms.",
+        "Mrs.",
         "Civ",
         "Ctr"
       ],

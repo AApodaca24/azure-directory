@@ -18,19 +18,6 @@
               >
                 <v-icon dark>keyboard_backspace</v-icon>
               </v-btn>
-              <v-btn
-                class="mx-2"
-                @click="goBack"
-                fab
-                dark
-                small
-                absolute
-                right
-                color="primary"
-                style="right:9%"
-              >
-                <v-icon dark>collections</v-icon>
-              </v-btn>
               <v-row class="justify-center">
                 <v-flex>
                   <v-container>
@@ -63,7 +50,7 @@
                 <v-container >
                   <div
                     v-html="user.bio"
-                    class="ma-10 px-10"
+                    class="px-10"
                     style="line-height:2rem;letter-spacing:1px;font-weight:700;"
                   ></div>
                 </v-container>
