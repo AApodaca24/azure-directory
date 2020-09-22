@@ -17,6 +17,7 @@
             <v-pagination
               v-model="currentPage"
               :length="pageCount"
+              color="#0333b2"
               v-on:next="this.currentPage++"
               v-on:previous="this.currentPage--"
             ></v-pagination>
@@ -61,8 +62,8 @@
               </v-list-item>
 
               <v-card-actions style="justify-content:center;">
-                <v-btn icon :to="{ name: 'User', params: { id: f._id } }"
-                  ><v-icon color="orange darken-2">launch</v-icon></v-btn
+                <v-btn tile large :to="{ name: 'User', params: { id: f._id } }"
+                  ><v-icon color="#0333b2" class="mr-2">launch</v-icon> See More </v-btn
                 >
               </v-card-actions>
             </v-card>
