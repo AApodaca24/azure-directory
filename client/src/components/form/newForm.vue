@@ -29,39 +29,35 @@
                   >
                 </v-stepper-step>
                 <v-stepper-content step="1">
-                  <v-card
-                    color="grey lighten-3"
-                    style="margin-bottom:2rem;"
-                    height="400px"
-                  >
+                  <v-card style="margin-bottom:2rem;" height="100%">
                     <v-select
                       v-model="form.scope"
                       :items="category"
-                      filled
+                      outlined
                       label="Faculty or Major"
                     ></v-select>
                     <v-text-field
                       v-model="form.name"
-                      filled
+                      outlined
                       label="Enter Full Name"
                       required
                     ></v-text-field>
                     <v-select
                       v-model="form.rank"
                       :items="rankEnum"
-                      filled
+                      outlined
                       label="Rank/Grade"
                     ></v-select>
                     <v-select
                       v-model="form.dept"
                       :items="deptsEnum"
-                      filled
+                      outlined
                       label="Select Department"
                     ></v-select>
                     <v-text-field
                       v-model="form.title"
                       label="Title"
-                      filled
+                      outlined
                       required
                     ></v-text-field>
                   </v-card>
@@ -78,21 +74,17 @@
                   >Enter some contact Info</v-stepper-step
                 >
                 <v-stepper-content step="2">
-                  <v-card
-                    color="grey lighten-3"
-                    style="margin-bottom:2rem;"
-                    height="400px"
-                  >
+                  <v-card style="margin-bottom:2rem;" height="400px">
                     <v-text-field
                       v-model="form.email"
                       label="Enter Email"
                       :rules="emailRules"
-                      filled
+                      outlined
                       required
                     ></v-text-field>
                     <v-text-field
                       v-model="form.phone"
-                      filled
+                      outlined
                       label="Enter Phone"
                       placeholder="Enter 10 digits no dashes"
                       required
@@ -101,7 +93,7 @@
                       v-model="form.loc"
                       label="Office Location"
                       placeholder="e.g., 6J-109"
-                      filled
+                      outlined
                       required
                     ></v-text-field>
                   </v-card>
@@ -114,12 +106,22 @@
                   >Now for the good stuff.</v-stepper-step
                 >
                 <v-stepper-content step="3">
-                  <v-card
-                    style="margin-bottom:2rem;"
-                    height="380px"
-                  >
+                  <v-card style="margin-bottom:2rem;" height="100%">
                     <v-row>
                       <v-col xs6>
+                        <v-textarea
+                          outlined
+                          v-model="form.bio"
+                          name="input-7-4"
+                          label="Personal Bio"
+                          height="400px"
+                        ></v-textarea>
+                      </v-col>
+                      <v-col xs6 style="display:flex;flex-direction:column;">
+                        <div class="upload">
+                          <h4 class="mb-2">Upload your image here</h4>
+                          <Upload v-on:set-imgURI="setImageURI" />
+                        </div>
                         <v-combobox
                           v-model="form.hobbies"
                           :items="form.hobbies"
@@ -128,19 +130,6 @@
                           multiple
                           chips
                         ></v-combobox>
-                        <div class="upload" style="text-align: center; width: 100%; margin: 0 auto;">
-                          <h4>Upload your image here</h4>
-                          <Upload v-on:set-imgURI="setImageURI" />
-                        </div>
-                      </v-col>
-                      <v-col xs6>
-                        <v-textarea
-                          filled
-                          v-model="form.bio"
-                          name="input-7-4"
-                          label="Personal Bio"
-                          height="350px"
-                        ></v-textarea>
                       </v-col>
                     </v-row>
                   </v-card>
@@ -163,103 +152,103 @@
 </template>
 
 <script>
-import axios from "axios";
-import Upload from "../Upload";
+import axios from 'axios';
+import Upload from '../Upload';
 
 export default {
-  name: "newForm",
+  name: 'newForm',
   components: {
-    Upload
+    Upload,
   },
   data() {
     return {
       e6: 1,
       valid: true,
       form: {
-        name: "",
-        title: "",
+        name: '',
+        title: '',
         dept: null,
-        loc: "",
-        email: "",
-        phone: "",
+        loc: '',
+        email: '',
+        phone: '',
         rank: null,
-        bio: "",
-        img: "",
+        bio: '',
+        img: '',
         hobbies: [],
-        scope: null
+        scope: null,
       },
       error: false,
-      errorText: "",
+      errorText: '',
       loading: false,
       selectedFile: null,
       deptsEnum: [
-        "DF",
-        "DFAN",
-        "DFAS",
-        "DFB",
-        "DFBL",
-        "DFC",
-        "DFCE",
-        "DFCS",
-        "DFEC",
-        "DFEG",
-        "DFEI",
-        "DFME",
-        "DFENG",
-        "DFF",
-        "DFIP",
-        "DFH",
-        "DFK",
-        "DFL",
-        "DFLIB",
-        "DFM",
-        "DFMI",
-        "DFMS",
-        "DFP",
-        "DFPS",
-        "DFPY",
-        "DFR",
-        "DFS"
+        'DF',
+        'DFAN',
+        'DFAS',
+        'DFB',
+        'DFBL',
+        'DFC',
+        'DFCE',
+        'DFCS',
+        'DFEC',
+        'DFEG',
+        'DFEI',
+        'DFME',
+        'DFENG',
+        'DFF',
+        'DFIP',
+        'DFH',
+        'DFK',
+        'DFL',
+        'DFLIB',
+        'DFM',
+        'DFMI',
+        'DFMS',
+        'DFP',
+        'DFPS',
+        'DFPY',
+        'DFR',
+        'DFS',
       ],
-      classYear: ["2024", "2023", "2022", "2021"],
+      classYear: ['2024', '2023', '2022', '2021'],
       rankEnum: [
-        "Gen.",
-        "Lt. Gen.",
-        "Maj. Gen.",
-        "Brig. Gen.",
-        "Col.",
-        "Lt. Col.",
-        "Major",
-        "Captain",
-        "2d Lt",
-        "1st. Lt.",
-        "CMSAF",
-        "CCMS",
-        "First Sgt.",
-        "CMSgt.",
-        "SMSgt.",
-        "MSgt.",
-        "TSgt.",
-        "SSgt.",
-        "SrA.",
-        "A1C",
-        "Amn",
-        "Prof.",
-        "Assoc. Prof.",
-        "Asst. Prof.",
-        "Instr.",
-        "Dr.",
-        "Mr.",
-        "Ms.",
-        "Mrs.",
-        "Civ",
-        "Ctr"
+        'Gen.',
+        'Lt. Gen.',
+        'Maj. Gen.',
+        'Brig. Gen.',
+        'Col.',
+        'Lt. Col.',
+        'Major',
+        'Captain',
+        '2d Lt',
+        '1st. Lt.',
+        'CMSAF',
+        'CCMS',
+        'First Sgt.',
+        'CMSgt.',
+        'SMSgt.',
+        'MSgt.',
+        'TSgt.',
+        'SSgt.',
+        'SrA.',
+        'A1C',
+        'Amn',
+        'Prof.',
+        'Assoc. Prof.',
+        'Asst. Prof.',
+        'Instr.',
+        'Dr.',
+        'Mr.',
+        'Ms.',
+        'Mrs.',
+        'Civ',
+        'Ctr',
       ],
-      category: ["faculty", "major"],
+      category: ['faculty', 'major'],
       emailRules: [
-        v => !!v || "E-mail is required",
-        v => /.+@.+\..+/.test(v) || "E-mail must be valid"
-      ]
+        v => !!v || 'E-mail is required',
+        v => /.+@.+\..+/.test(v) || 'E-mail must be valid',
+      ],
     };
   },
   methods: {
@@ -282,32 +271,35 @@ export default {
         .then(res => {
           console.log(res);
           this.loading = false;
-          this.form.name = "";
-          this.form.title = "";
-          this.form.email = "";
-          this.form.phone = "";
+          this.form.name = '';
+          this.form.title = '';
+          this.form.email = '';
+          this.form.phone = '';
           this.form.hobbies = [];
           this.form.dept = null;
-          this.form.loc = "";
+          this.form.loc = '';
           this.form.rank = null;
-          this.form.bio = "";
-          this.form.img = "";
+          this.form.bio = '';
+          this.form.img = '';
           this.form.scope = null;
           this.selectedFile = null;
-          this.$router.push({ name: "Directory" });
+          this.$router.push({ name: 'Directory' });
         })
         .catch(err => {
           this.loading = false;
           this.error = true;
           this.errorText = err;
         });
-    }
-  }
+    },
+  },
 };
 </script>
 
 <style scoped>
 .form {
   width: 100%;
+}
+.v-card {
+  padding: 2rem !important;
 }
 </style>

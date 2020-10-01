@@ -11,7 +11,7 @@
             tile
             color="rgb(0, 43, 92)"
             :to="{ name: 'register' }"
-            dark
+
             >Register</v-btn
           >
           <v-btn
@@ -20,7 +20,7 @@
             tile
             color="rgb(0, 43, 92)"
             :to="{ name: 'login' }"
-            dark
+
             >Login</v-btn
           >
            <v-btn
@@ -29,14 +29,14 @@
             tile
             color="rgb(0, 43, 92)"
             :to="{ name: 'Directory' }"
-            dark
+
             >Directory</v-btn
           > <v-btn
             class="ma-2"
             v-if="isAuth"
             tile
             color="rgb(0, 43, 92)"
-            dark
+
             @click="$msal.signOut()"
             >Logout</v-btn
           >
@@ -66,7 +66,7 @@ export default {
 }
 
 .showcase {
-  background-color: #dddddd;
+  background-color: #2c2c2c;
   display: flex;
   justify-content: center;
   align-items: center;
