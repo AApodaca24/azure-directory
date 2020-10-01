@@ -11,7 +11,6 @@
             tile
             color="rgb(0, 43, 92)"
             :to="{ name: 'register' }"
-
             >Register</v-btn
           >
           <v-btn
@@ -20,27 +19,28 @@
             tile
             color="rgb(0, 43, 92)"
             :to="{ name: 'login' }"
-
             >Login</v-btn
           >
-           <v-btn
+          <v-btn
             class="ma-2"
             v-if="isAuth"
             tile
             color="rgb(0, 43, 92)"
             :to="{ name: 'Directory' }"
-
             >Directory</v-btn
-          > <v-btn
+          >
+          <v-btn
             class="ma-2"
             v-if="isAuth"
             tile
             color="rgb(0, 43, 92)"
-
             @click="$msal.signOut()"
             >Logout</v-btn
           >
         </div>
+        <v-alert dense type="info">
+          This app is in BETA
+        </v-alert>
       </div>
     </section>
   </div>
@@ -50,15 +50,16 @@
 // @ is an alias to /src
 
 export default {
-  name: "Home",
+  name: 'Home',
   props: {
     routes: Array,
-    isAuth: Boolean
-  }
+    isAuth: Boolean,
+  },
 };
 </script>
 
 <style scoped>
+
 .home {
   min-height: 90vh;
   min-width: 100vw;
