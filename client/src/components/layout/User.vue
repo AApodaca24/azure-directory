@@ -44,21 +44,25 @@
                     ><br />
                     <span>{{ user.loc }}</span>
                   </v-container>
+                  <v-flex class="px-4">
+                    <v-chip
+                      v-for="(a, index) in user.hobbies"
+                      :key="index"
+                      style="margin: 0 .2rem;"
+                    >
+                      {{ a }}
+                    </v-chip>
+                  </v-flex>
                 </v-flex>
               </v-row>
               <v-row>
-                <v-container >
+                <v-container>
                   <div
                     v-html="user.bio"
                     class="px-10"
                     style="line-height:2rem;letter-spacing:1px;font-weight:700;"
                   ></div>
                 </v-container>
-              </v-row>
-              <v-row style="padding:1rem 0 2rem 2rem">
-                <v-chip v-for="(a, index) in user.hobbies" :key="index" style="margin: 0 .2rem;">
-                  {{ a }}
-                </v-chip>
               </v-row>
               <v-row>
                 <v-container v-if="user.multiImg.length > 0">
@@ -109,28 +113,28 @@
 
 <script>
 export default {
-  name: "User",
+  name: 'User',
   props: {
-    faculty: Array
+    faculty: Array,
   },
   data() {
     return {
-      id: this.$route.params.id
+      id: this.$route.params.id,
     };
   },
-    beforeRouteUpdate (to, from, next) {
+  beforeRouteUpdate(to, from, next) {
     // called before the route that renders this component is confirmed.
     // does NOT have access to `this` component instance,
     // because it has not been created yet when this guard is called!
-    console.log(to, from)
-    this.id = to.params.id
-    next()
+    console.log(to, from);
+    this.id = to.params.id;
+    next();
   },
   computed: {
     user() {
       const filtered = this.faculty.filter(f => f._id === this.id);
       return filtered[0];
-    }
+    },
   },
   methods: {
     goBack() {
@@ -138,11 +142,11 @@ export default {
     },
     navigateto() {
       this.$router.push({
-        name: "department",
-        params: { dept: this.user.dept }
+        name: 'department',
+        params: { dept: this.user.dept },
       });
-    }
-  }
+    },
+  },
 };
 </script>
 

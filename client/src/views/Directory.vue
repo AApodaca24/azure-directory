@@ -6,6 +6,7 @@
         v-on:set-active="setActiveRecord"
         v-on:delete-item="deleteActiveRecord"
         v-on:navigate-to="navigateToUser"
+        :loading='loading'
         :active="activeRecord ? activeRecord[0] : ''"
       />
     </main>
@@ -43,15 +44,17 @@ export default {
       console.log(event);
     },
     async getData() {
-      this.loading = true;
+      
       try {
         const { data } = await axios.get(
           "https://dfdirectory.azurewebsites.net/api/v1/faculty"
         );
         this.faculty = data;
+        this.loading = false
       } catch (error) {
         this.error = true;
         this.errorText = error;
+        this.loading = false
         console.log(error);
       }
     },
@@ -61,6 +64,7 @@ export default {
       this.$router.push({ name: "editForm" });
     },
     deleteActiveRecord(id) {
+      this.loading = true
       axios
         .delete(`https://dfdirectory.azurewebsites.net/api/v1/faculty/${id}`)
         .then(res => {
@@ -75,6 +79,7 @@ export default {
     }
   },
   created() {
+    this.loading = true;
     this.getData();
   }
 };

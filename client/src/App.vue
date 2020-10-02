@@ -107,7 +107,7 @@ body {
   box-sizing: border-box;
 }
 
-.application {
+.v-application {
   font-family: Cera Medium, 'Trebuchet MS', 'Lucida Sans', Aria, sans-serif !important;
 }
 </style>

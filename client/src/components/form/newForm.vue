@@ -119,6 +119,7 @@
                         <h4 class="mb-2">Type your hobbies and hit enter to create a list.</h4>
                         <v-combobox
                           v-model="form.hobbies"
+                          :loading="loading"
                           :items="form.hobbies"
                           label="Hobbies"
                           hint="Please enter as many as you like"
@@ -133,7 +134,7 @@
                     </v-row>
                   </v-card>
                   <v-flex row justify-space-around class="ml-2">
-                    <v-btn color="success" dark @click="onSubmit">Submit</v-btn>
+                    <v-btn :loading="loading" color="success" dark @click="onSubmit">Submit</v-btn>
                     <v-btn text>Cancel</v-btn>
                     <v-btn color="error" class="mr-4" @click="reset">
                       Reset Form
@@ -258,9 +259,11 @@ export default {
       this.$refs.form.reset();
     },
     setImageURI(file) {
+      this.loading = true
       this.selectedFile = file.file;
       console.log(this.selectedFile.name);
       this.form.img = `https://dfimages01.blob.core.windows.net/dfdirectory/${this.selectedFile.name}`;
+      this.loading = false
     },
     async onSubmit() {
       this.loading = true;

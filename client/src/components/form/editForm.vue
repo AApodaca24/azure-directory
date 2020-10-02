@@ -200,7 +200,7 @@
               </v-row>
               <v-row>
                 <v-flex class="mx-5 mb-4">
-                  <v-btn block color="success" @click="onSubmit" dark
+                  <v-btn block color="success" @click="onSubmit" :loading="loading" dark
                     >Submit</v-btn
                   >
                 </v-flex>
