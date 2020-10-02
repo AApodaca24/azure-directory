@@ -14,7 +14,7 @@
                 small
                 absolute
                 right
-                color="primary"
+                color="rgb(3, 51, 178)"
               >
                 <v-icon dark>keyboard_backspace</v-icon>
               </v-btn>
@@ -26,7 +26,19 @@
                       :alt="user.name"
                       aspect-ratio="1"
                       contain
-                    />
+                    >
+                      <template v-slot:placeholder>
+                        <v-row
+                          class="fill-height ma-0"
+                          align="center"
+                          justify="center"
+                        >
+                          <v-progress-circular
+                            indeterminate
+                            color="grey lighten-5"
+                          ></v-progress-circular>
+                        </v-row> </template
+                    ></v-img>
                   </v-container>
                 </v-flex>
                 <v-flex>
@@ -116,17 +128,14 @@ import axios from 'axios';
 
 export default {
   name: 'User',
-  props: {
-    faculty: Array,
-    user: null,
-  },
   data() {
     return {
       id: this.$route.params.id,
+      user: null,
     };
   },
-  mounted() {
-    this.getFaculty()
+  created() {
+    this.getFaculty();
   },
   beforeRouteUpdate(to, from, next) {
     // called before the route that renders this component is confirmed.
@@ -147,14 +156,17 @@ export default {
       });
     },
     async getFaculty() {
-      const id = this.id
+      const id = this.id;
       try {
-        const { data } = axios.get(`https://dfdirectory.azurewebsites.net/api/v1/faculty/${ id }`)
-        this.user = data
+        const { data } = await axios.get(
+          `https://dfdirectory.azurewebsites.net/api/v1/faculty/${id}`
+        );
+        console.log(data);
+        this.user = data;
       } catch (err) {
-        console.log(err)
+        console.log(err);
       }
-    }
+    },
   },
 };
 </script>

@@ -47,7 +47,20 @@
                   <v-list-item-subtitle>{{ f.title }}</v-list-item-subtitle>
                 </v-list-item-content>
               </v-list-item>
-              <v-img :src="f.img" height="300"></v-img>
+              <v-img :src="f.img" height="300">
+                <template v-slot:placeholder>
+                  <v-row
+                    class="fill-height ma-0"
+                    align="center"
+                    justify="center"
+                  >
+                    <v-progress-circular
+                      indeterminate
+                      color="grey lighten-5"
+                    ></v-progress-circular>
+                  </v-row>
+                </template>
+              </v-img>
 
               <v-list-item three-line>
                 <v-list-item-content>
@@ -63,8 +76,8 @@
 
               <v-card-actions style="justify-content:center;">
                 <v-btn tile large :to="{ name: 'User', params: { id: f._id } }"
-                  ><v-icon color="#0333b2" class="mr-2">launch</v-icon> See More </v-btn
-                >
+                  ><v-icon color="#0333b2" class="mr-2">launch</v-icon> See More
+                </v-btn>
               </v-card-actions>
             </v-card>
           </v-flex>
@@ -90,15 +103,15 @@ export default {
     };
   },
   mounted() {
-    this.getDeptData()
+    this.getDeptData();
   },
-  beforeRouteUpdate (to, from, next) {
+  beforeRouteUpdate(to, from, next) {
     // called before the route that renders this component is confirmed.
     // does NOT have access to `this` component instance,
     // because it has not been created yet when this guard is called!
-    console.log(to, from)
-    this.dept = to.params.dept
-    next()
+    console.log(to, from);
+    this.dept = to.params.dept;
+    next();
   },
 
   methods: {
@@ -107,12 +120,14 @@ export default {
     },
     async getDeptData() {
       try {
-        const { data } = await axios.get(`https://dfdirectory.azurewebsites.net/api/v1/faculty/dept/${ this.dept.toUpperCase() }`)
-        this.faculty = data
+        const { data } = await axios.get(
+          `https://dfdirectory.azurewebsites.net/api/v1/faculty/dept/${this.dept.toUpperCase()}`
+        );
+        this.faculty = data;
       } catch (err) {
-        console.log(err)
+        console.log(err);
       }
-    }
+    },
   },
   computed: {
     pageCount() {
@@ -124,7 +139,7 @@ export default {
       const deptFaculty = this.faculty.filter(f => f.dept === this.dept);
       if (this.search.length > 0) {
         const searchFaculty = deptFaculty.filter(f =>
-          f.name.toLowerCase().includes(this.search.toLowerCase()),
+          f.name.toLowerCase().includes(this.search.toLowerCase())
         );
         return searchFaculty;
       } else {

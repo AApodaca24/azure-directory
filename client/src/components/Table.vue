@@ -60,11 +60,13 @@
                 loading-text="Please Wait for Members..."
               >
                 <template v-slot:item.action="{ item }">
-                  <v-flex style="display: flex;flex-flow:row wrap:justify-content:center;">
+                  <v-flex
+                    style="display: flex;flex-flow:row wrap:justify-content:center;"
+                  >
                     <v-btn
                       color="orange lighten-1"
                       small
-                      @click="$emit('set-active', item._id)"
+                      @click="setActiveRecord(item._id)"
                       class="ma-3"
                     >
                       <v-icon>create</v-icon>
@@ -73,7 +75,7 @@
                       color="red accent-4"
                       small
                       dark
-                      @click="$emit('delete-item', item._id)"
+                      @click="deleteActiveRecord(item._id)"
                       class="ma-3"
                     >
                       <v-icon>delete_outline</v-icon>
@@ -82,7 +84,7 @@
                       color="blue darken-4"
                       small
                       dark
-                      @click="$emit('navigate-to', item._id)"
+                      @click="navigateToUser(item._id)"
                       class="ma-3"
                     >
                       <v-icon>launch</v-icon>
@@ -100,13 +102,16 @@
 </template>
 
 <script>
+import axios from 'axios';
+
 export default {
   name: 'Table',
-  props: ['faculty', 'loading'],
   data() {
     return {
       search: '',
       selectedDept: null,
+      loading: false,
+      faculty: [],
       deptsEnum: [
         'DF',
         'DFAN',
@@ -148,6 +153,44 @@ export default {
         { text: 'Action', value: 'action' },
       ],
     };
+  },
+  mounted() {
+    this.getData();
+  },
+  methods: {
+    async getData() {
+      try {
+        const { data } = await axios.get(
+          'https://dfdirectory.azurewebsites.net/api/v1/faculty'
+        );
+        this.faculty = data;
+        this.loading = false;
+      } catch (error) {
+        this.error = true;
+        this.errorText = error;
+        this.loading = false;
+        console.log(error);
+      }
+    },
+    setActiveRecord(id) {
+      const filtered = this.faculty.filter(f => id === f._id);
+      this.activeRecord = filtered;
+      this.$router.push({ name: 'editForm' });
+    },
+    deleteActiveRecord(id) {
+      this.loading = true;
+      axios
+        .delete(`https://dfdirectory.azurewebsites.net/api/v1/faculty/${id}`)
+        .then(res => {
+          console.log(res);
+          this.$router.push();
+        })
+        .catch(err => console.log(err));
+      this.getData();
+    },
+    navigateToUser(id) {
+      this.$router.push({ name: 'User', params: { id } });
+    },
   },
   computed: {
     deptFaculty() {
