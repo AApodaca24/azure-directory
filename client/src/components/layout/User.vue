@@ -112,15 +112,21 @@
 </template>
 
 <script>
+import axios from 'axios';
+
 export default {
   name: 'User',
   props: {
     faculty: Array,
+    user: null,
   },
   data() {
     return {
       id: this.$route.params.id,
     };
+  },
+  mounted() {
+    this.getFaculty()
   },
   beforeRouteUpdate(to, from, next) {
     // called before the route that renders this component is confirmed.
@@ -129,12 +135,6 @@ export default {
     console.log(to, from);
     this.id = to.params.id;
     next();
-  },
-  computed: {
-    user() {
-      const filtered = this.faculty.filter(f => f._id === this.id);
-      return filtered[0];
-    },
   },
   methods: {
     goBack() {
@@ -146,6 +146,15 @@ export default {
         params: { dept: this.user.dept },
       });
     },
+    async getFaculty() {
+      const id = this.id
+      try {
+        const { data } = axios.get(`https://dfdirectory.azurewebsites.net/api/v1/faculty/${ id }`)
+        this.user = data
+      } catch (err) {
+        console.log(err)
+      }
+    }
   },
 };
 </script>

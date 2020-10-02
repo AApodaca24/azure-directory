@@ -75,11 +75,10 @@
 </template>
 
 <script>
+import axios from 'axios';
+
 export default {
   name: 'Card',
-  props: {
-    faculty: Array,
-  },
   data() {
     return {
       dept: this.$route.params.dept,
@@ -87,7 +86,11 @@ export default {
       currentPage: 1,
       search: '',
       filtered: [],
+      faculty: [],
     };
+  },
+  mounted() {
+    this.getDeptData()
   },
   beforeRouteUpdate (to, from, next) {
     // called before the route that renders this component is confirmed.
@@ -102,6 +105,14 @@ export default {
     launchUser(id) {
       this.$router.push({ name: 'User', params: { id } });
     },
+    async getDeptData() {
+      try {
+        const { data } = await axios.get(`https://dfdirectory.azurewebsites.net/api/v1/faculty/dept/${ this.dept.toUpperCase() }`)
+        this.faculty = data
+      } catch (err) {
+        console.log(err)
+      }
+    }
   },
   computed: {
     pageCount() {

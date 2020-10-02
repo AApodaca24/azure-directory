@@ -1,23 +1,51 @@
-const fs = require("fs");
-const path = require("path");
-const jwt = require("jsonwebtoken");
-const dotenv = require("dotenv");
-const bcrypt = require("bcrypt");
+const fs = require('fs');
+const path = require('path');
+const jwt = require('jsonwebtoken');
+const dotenv = require('dotenv');
+const bcrypt = require('bcrypt');
 
-const { Faculty, User } = require("./models");
-const ReadPreference = require("mongodb").ReadPreference;
-dotenv.config({ path: "./config/config.env" });
+const { Faculty, User } = require('./models');
+const ReadPreference = require('mongodb').ReadPreference;
+dotenv.config({ path: './config/config.env' });
 
 const SECRET = process.env.SECRET;
 console.log(SECRET);
-require("./db").connect();
+require('./db').connect();
 
 const getFaculty = (req, res) => {
   const docquery = Faculty.find({}).read(ReadPreference.NEAREST);
   docquery
     .exec()
-    .then((faculty) => res.json(faculty))
-    .catch((err) => res.status(500).send(err));
+    .then(faculty => res.json(faculty))
+    .catch(err => res.status(500).send(err));
+};
+
+const getFacultyDept = async (req, res) => {
+  const dept = req.params.dept;
+  try {
+    const deptData = await Faculty.find({ dept });
+    if (!deptData) {
+      res.status(404).send({ message: `No Data found for ${dept}` });
+    } else {
+      res.status(200).send(deptData);
+    }
+  } catch (err) {
+    res.status(500).send({ err });
+  }
+};
+
+const getFacultyId = async (req, res) => {
+  const id = req.params.id;
+  try {
+    const faculty = await Faculty.findOne({ _id: id });
+    if (!faculty) {
+      res.status(404).send({ message: `Faculty ${id} not found` });
+    } else {
+      res.status(200).send(faculty);
+    }
+  } catch (err) {
+    res.status(500).send({ err });
+  }
 };
 
 const createFaculty = (req, res) => {
@@ -35,19 +63,17 @@ const createFaculty = (req, res) => {
     scope: request.scope,
     hobbies: request.hobbies,
   });
-  console.log(faculty);
   faculty
     .save()
-    .then(() => res.status(200).send({ message: "User Added" }))
-    .catch((err) => res.send({ error: err.message }));
+    .then(() => res.status(200).send({ message: 'User Added' }))
+    .catch(err => res.send({ error: err.message }));
 };
 
 const updateFaculty = (req, res) => {
   const request = req.body;
   const id = req.params.id;
-  console.log(request, id);
   Faculty.findOne({ _id: id })
-    .then((f) => {
+    .then(f => {
       f.name = request.name;
       f.dept = request.dept;
       f.loc = request.loc;
@@ -62,24 +88,22 @@ const updateFaculty = (req, res) => {
       f.multiImg = request.multiImg;
       f.save()
         .then(res.status(200).send(f))
-        .catch((err) => res.status(500).json(err));
+        .catch(err => res.status(500).json(err));
     })
-    .catch((err) => res.status(500).json(err));
+    .catch(err => res.status(500).json(err));
 };
 
 const deleteFaculty = async (req, res) => {
   const id = req.params.id;
   try {
     let faculty = await Faculty.findOne({ _id: id });
-    console.dir(faculty);
     if (!faculty) {
-      res.status(404).send("not found");
+      res.status(404).send('not found');
     } else {
       await Faculty.remove({ _id: id });
-      res.status(200).send("user deleted");
+      res.status(200).send('user deleted');
     }
   } catch (err) {
-    console.log(dir);
     res.send(err);
   }
 };
@@ -97,7 +121,7 @@ const registerUser = async (req, res) => {
       const token = jwt.sign({ id: user._id }, SECRET, { expiresIn: 86400 });
       res.status(200).send({ auth: true, token });
     })
-    .catch((err) => {
+    .catch(err => {
       console.dir(err);
       res.status(500).json(err);
     });
@@ -107,13 +131,13 @@ const loginUser = async (req, res) => {
   const { email, password } = req.body;
   try {
     const user = await User.findOne({ email: email.toString() }).exec();
-    console.log(user);
+
     if (user === undefined) {
-      res.status(404).send({ auth: false, error: "Not Found" });
+      res.status(404).send({ auth: false, error: 'Not Found' });
     } else {
       const valid = bcrypt.compareSync(password, user.password);
       if (valid === undefined) {
-        res.status(404).send({ auth: false, error: "passwords dont match" });
+        res.status(404).send({ auth: false, error: 'passwords dont match' });
       } else {
         const token = jwt.sign({ id: user._id }, SECRET, { expiresIn: 86400 });
         res.status(200).send({
@@ -135,6 +159,8 @@ const loginUser = async (req, res) => {
 
 module.exports = {
   getFaculty,
+  getFacultyDept,
+  getFacultyId,
   createFaculty,
   updateFaculty,
   deleteFaculty,

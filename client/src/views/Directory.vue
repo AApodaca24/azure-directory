@@ -2,7 +2,6 @@
   <div class="center">
     <main>
       <router-view
-        :faculty="faculty"
         v-on:set-active="setActiveRecord"
         v-on:delete-item="deleteActiveRecord"
         v-on:navigate-to="navigateToUser"
