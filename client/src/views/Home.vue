@@ -4,23 +4,10 @@
       <div class="card">
         <h1>Welcome to the Faculty Directory App</h1>
         <p>Here you can view and add members to view anywhere.</p>
+        <v-alert dense type="info">
+          This app is in BETA
+        </v-alert>
         <div>
-          <v-btn
-            class="ma-2"
-            v-if="!isAuth"
-            tile
-            color="rgb(0, 43, 92)"
-            :to="{ name: 'register' }"
-            >Register</v-btn
-          >
-          <v-btn
-            class="ma-2"
-            v-if="!isAuth"
-            tile
-            color="rgb(0, 43, 92)"
-            :to="{ name: 'login' }"
-            >Login</v-btn
-          >
           <v-btn
             class="ma-2"
             v-if="isAuth"
@@ -38,9 +25,14 @@
             >Logout</v-btn
           >
         </div>
-        <v-alert dense type="info">
-          This app is in BETA
-        </v-alert>
+        <v-flex xs12 v-if="!isAuth">
+          <v-container style="display:flex;flex-direction:column;margin-top:0;">
+            <p>Sign in with Microsoft</p>
+            <v-btn tile dark color="rgb(0, 43, 92)" @click="$emit('set-auth')">
+              <v-icon left>mdi-microsoft</v-icon> Sign-In
+            </v-btn>
+          </v-container></v-flex
+        >
       </div>
     </section>
   </div>
@@ -55,11 +47,13 @@ export default {
     routes: Array,
     isAuth: Boolean,
   },
+  data: () => ({
+    dialog: false,
+  }),
 };
 </script>
 
 <style scoped>
-
 .home {
   min-height: 90vh;
   min-width: 100vw;

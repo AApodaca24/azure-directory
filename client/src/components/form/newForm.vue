@@ -108,20 +108,15 @@
                 <v-stepper-content step="3">
                   <v-card style="margin-bottom:2rem;" height="100%">
                     <v-row>
-                      <v-col xs6>
-                        <v-textarea
-                          outlined
-                          v-model="form.bio"
-                          name="input-7-4"
-                          label="Personal Bio"
-                          height="400px"
-                        ></v-textarea>
-                      </v-col>
-                      <v-col xs6 style="display:flex;flex-direction:column;">
+                      <v-col
+                        cols="12"
+                        style="display:flex;flex-direction:column;"
+                      >
                         <div class="upload">
                           <h4 class="mb-2">Upload your image here</h4>
                           <Upload v-on:set-imgURI="setImageURI" />
                         </div>
+                        <h4 class="mb-2">Type your hobbies and hit enter to create a list.</h4>
                         <v-combobox
                           v-model="form.hobbies"
                           :items="form.hobbies"
@@ -130,6 +125,10 @@
                           multiple
                           chips
                         ></v-combobox>
+                      </v-col>
+                      <v-col cols="12">
+                      <h4 class="mb-2">Enter your bio here</h4>
+                        <editor :bio.sync="form.bio" />
                       </v-col>
                     </v-row>
                   </v-card>
@@ -154,11 +153,13 @@
 <script>
 import axios from 'axios';
 import Upload from '../Upload';
+import editor from './editor';
 
 export default {
   name: 'newForm',
   components: {
     Upload,
+    editor,
   },
   data() {
     return {
@@ -209,6 +210,7 @@ export default {
         'DFPY',
         'DFR',
         'DFS',
+        'DFT'
       ],
       classYear: ['2024', '2023', '2022', '2021'],
       rankEnum: [

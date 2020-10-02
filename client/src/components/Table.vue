@@ -127,7 +127,8 @@ export default {
         "DFPS",
         "DFPY",
         "DFR",
-        "DFS"
+        "DFS",
+        "DFT"
       ],
       headers: [
         {

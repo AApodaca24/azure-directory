@@ -36,7 +36,8 @@
     "passport": "^0.4.1",
     "passport-azure-ad": "^4.2.1",
     "vue-filepond": "^6.0.2",
-    "vue-msal": "^3.2.0"
+    "vue-msal": "^3.2.0",
+    "vue2-editor": "^2.10.2"
   },
   "proxy": "http://localhost:5000"
 }

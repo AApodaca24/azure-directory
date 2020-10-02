@@ -51,6 +51,7 @@
       </v-list>
       <v-switch
         v-model="$vuetify.theme.dark"
+        @change="$emit('set-theme')"
         hide-details
         inset
         label="Toggle Dark Mode"

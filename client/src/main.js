@@ -3,10 +3,13 @@ import App from "./App.vue";
 import router from "./router";
 import vuetify from "../src/plugins/vuetify";
 import msal from 'vue-msal'
+import CKEditor from '@ckeditor/ckeditor5-vue';
 
 import "material-icons/iconfont/material-icons.css";
 import store from "./store";
 
+
+Vue.use( CKEditor );
 Vue.use(msal, {
   auth: {
     clientId: "1842986c-51df-4ca7-96d7-58a267b19a04",

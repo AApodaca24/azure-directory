@@ -87,8 +87,8 @@
                 </v-col>
               </v-row>
               <v-row>
-                <v-col>
-                  <v-flex class="pa-2 pl-4">
+                <v-col cols="12">
+                  <v-flex class="pa-2 px-4">
                     <v-text-field
                       v-model="form.email"
                       label="Enter Email"
@@ -120,15 +120,10 @@
                     ></v-combobox>
                   </v-flex>
                 </v-col>
-                <v-col>
-                  <v-flex class="pa-2 pr-4">
-                    <v-textarea
-                      filled
-                      v-model="form.bio"
-                      name="input-7-4"
-                      label="Personal Bio"
-                      height="350px"
-                    ></v-textarea>
+                <v-col cols="12">
+                  <v-flex class="pa-2 px-4">
+                    <h1 class="mb-4">{{ active.name }}'s Bio</h1>
+                    <editor :bio.sync="form.bio" />
                   </v-flex>
                 </v-col>
               </v-row>
@@ -223,6 +218,7 @@
 import axios from 'axios';
 import Upload from '../Upload';
 import multiUpload from '../multiUpload';
+import editor from '../form/editor'
 
 export default {
   name: 'editForm',
@@ -230,6 +226,7 @@ export default {
   components: {
     Upload,
     multiUpload,
+    editor,
   },
   data() {
     return {
@@ -281,6 +278,7 @@ export default {
         'DFPY',
         'DFR',
         'DFS',
+        'DFT'
       ],
       classYear: ['2024', '2023', '2022', '2021'],
       rankEnum: [
