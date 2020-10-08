@@ -1,31 +1,39 @@
-import Vue from "vue";
-import App from "./App.vue";
-import router from "./router";
-import vuetify from "../src/plugins/vuetify";
-import msal from 'vue-msal'
-import CKEditor from '@ckeditor/ckeditor5-vue';
+import Vue from 'vue';
+import App from './App.vue';
+import router from './router';
+import vuetify from '../src/plugins/vuetify';
+import msal from 'vue-msal';
 
-import "material-icons/iconfont/material-icons.css";
-import store from "./store";
+import 'material-icons/iconfont/material-icons.css';
+import store from './store';
 
-
-Vue.use( CKEditor );
 Vue.use(msal, {
   auth: {
-    clientId: "1842986c-51df-4ca7-96d7-58a267b19a04",
-    postLogoutRedirectUri: "https://dfdirectory.azurewebsites.net/",
-    redirectUri: "https://dfdirectory.azurewebsites.net/",
-    navigateToLoginRequestUrl: false
+    clientId: '1842986c-51df-4ca7-96d7-58a267b19a04',
+    postLogoutRedirectUri: 'https://dfdirectory.azurewebsites.net/',
+    redirectUri: 'http://localhost:8080',
+    navigateToLoginRequestUrl: false,
   },
   framework: {
-    globalMixin: true
-  }
-})
+    globalMixin: true,
+  },
+  graph: {
+    callAfterInit: true,
+    endpoints: {
+      // ...
+      // 'key' : endpoint
+      // ...
+      profile: '/me',
+      photo: { url: '/me/photo/$value', responseType: 'blob', force: true },
+    },
+  },
+});
+
 Vue.config.productionTip = false;
 
 new Vue({
   router,
   vuetify,
   store,
-  render: h => h(App)
-}).$mount("#app");
+  render: h => h(App),
+}).$mount('#app');

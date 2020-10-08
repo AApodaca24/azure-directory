@@ -27,7 +27,7 @@
           </v-list-item>
         </v-list-item-group>
 
-        <v-menu offset-y v-if="isAuth" allow-overflow="true" max-height="600">
+        <v-menu offset-y v-if="isAuth" max-height="600">
           <template v-slot:activator="{ on, attrs }">
             <v-list-item v-if="isAuth" v-on="on" v-bind="attrs">
               <v-list-item-icon class="pr-2">

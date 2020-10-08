@@ -63,16 +63,14 @@ export default {
   },
   mounted() {
     const mode = localStorage.getItem('darkMode');
-    console.log(mode)
     if (mode === 'true') {
       this.$vuetify.theme.dark = true;
     } else if (mode === null) {
       this.$vuetify.theme.dark = true;
-      localStorage.setItem('darkMode', true)
+      localStorage.setItem('darkMode', true);
     } else {
       this.$vuetify.theme.dark = false;
     }
-    
   },
   methods: {
     setAuth() {
@@ -91,6 +89,13 @@ export default {
           localStorage.setItem('darkMode', false);
           break;
       }
+    },
+  },
+  computed: {
+    user() {
+      let user = { ...this.msal.user, profile: {} };
+      user.profile = this.msal.graph.profile;
+      return user;
     },
   },
 };

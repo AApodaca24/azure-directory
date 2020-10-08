@@ -23,7 +23,7 @@
                     :items="deptsEnum"
                     label="Department"
                     solo
-                    clearable="true"
+                    clearable=true
                   ></v-select>
                 </v-container>
                 <v-container>
@@ -174,7 +174,7 @@ export default {
     },
     setActiveRecord(id) {
       const filtered = this.faculty.filter(f => id === f._id);
-      this.activeRecord = filtered;
+      this.$emit('activeRecord', filtered)
       this.$router.push({ name: 'editForm' });
     },
     deleteActiveRecord(id) {

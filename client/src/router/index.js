@@ -5,6 +5,7 @@ import Directory from "../views/Directory.vue";
 import Register from "../views/Register.vue";
 import Login from "../views/Login.vue";
 import Table from "../components/Table.vue";
+import deptMap from "../components/layout/map.vue";
 import newForm from "../components/form/newForm.vue";
 import editForm from "../components/form/editForm.vue";
 import Card from "../components/layout/Card.vue";
@@ -25,6 +26,7 @@ const routes = [
       { path: "", name: "Directory", component: Table },
       { path: "user/:id", name: "User", component: User },
       { path: ":dept", name: "department", component: Card },
+      { path: ":dept/map", name: "deptMap", component: deptMap },
       { path: "new", name: "newForm", component: newForm },
       { path: "edit", name: "editForm", component: editForm }
     ]

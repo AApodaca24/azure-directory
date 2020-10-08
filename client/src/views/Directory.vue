@@ -1,7 +1,7 @@
 <template>
   <div class="center">
     <main>
-      <router-view />
+      <router-view v-on:activeRecord="setActive" :active="active"/>
     </main>
   </div>
 </template>
@@ -14,6 +14,15 @@ export default {
     User: Object,
     token: String,
   },
+  data: () => ({
+    active: null,
+  }),
+  methods: {
+    setActive(faculty) {
+      console.log(faculty)
+      this.active = faculty[0]
+    }
+  }
 };
 </script>
 
