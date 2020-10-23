@@ -11,7 +11,7 @@ Vue.use(msal, {
   auth: {
     clientId: '1842986c-51df-4ca7-96d7-58a267b19a04',
     postLogoutRedirectUri: 'https://dfdirectory.azurewebsites.net/',
-    redirectUri: 'http://localhost:8080',
+    redirectUri: 'https://dfdirectory.azurewebsites.net/',
     navigateToLoginRequestUrl: false,
   },
   framework: {
