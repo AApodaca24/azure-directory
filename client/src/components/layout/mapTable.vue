@@ -1,25 +1,31 @@
 <template>
   <div class="table">
-    <v-simple-table fixed-header>
-      <template v-slot:default>
-        <thead>
-          <tr style="text-align:center;">
-            <th class="text-left" style="font-size:2em;padding:.8em;">
-              Name
-            </th>
-            <th class="text-left" style="font-size:2em;padding:.8em;">
-              Office Number
-            </th>
-          </tr>
-        </thead>
-        <tbody>
-          <tr v-for="(item, index) in faculty" :key="index" @click="$emit('set-active', item.Room)" style="text-align:center;">
-            <td style="font-size:1.2em;padding:.8em;text-align:left;">{{ item.name }}</td>
-            <td style="font-size:1.2em;padding:.8em;">{{ item.Room }}</td>
-          </tr>
-        </tbody>
-      </template>
-    </v-simple-table>
+    <v-card>
+      <v-card-title>
+        <v-text-field
+          v-model="search"
+          append-icon="mdi-magnify"
+          label="Search"
+          single-line
+          hide-details
+        ></v-text-field>
+      </v-card-title>
+      <v-data-table
+        :headers="headers"
+        :items="faculty"
+        :search="search"
+        :item-class="tableClass"
+      >
+        <template v-slot:item.action="{ item }">
+          <v-flex
+            style="display: flex;flex-flow:row wrap:justify-content:center;"
+          >
+            <v-btn icon @click="$emit('set-active', item.Room)"><v-icon>location_on</v-icon></v-btn>
+            <v-btn icon @click="$emit('launch-user', item.Room)"><v-icon>account_circle</v-icon></v-btn>
+          </v-flex>
+        </template>
+      </v-data-table>
+    </v-card>
   </div>
 </template>
 
@@ -27,9 +33,44 @@
 export default {
   name: 'tableMap',
   props: {
-      faculty: Array
-  }
+    faculty: Array,
+  },
+  data: () => ({
+    search: '',
+    headers: [
+      {
+        text: 'Faculty',
+        align: 'start',
+        filterable: false,
+        value: 'name',
+      },
+      {
+        text: 'Office #',
+        align: 'start',
+        filterable: false,
+        value: 'Room',
+      },
+      {
+        text: '',
+        value: 'action',
+      },
+    ],
+  }),
+  methods: {
+    test(x) {
+      this.$emit('set-active', x.Room);
+    },
+    tableClass() {
+        return 'myTableClass'
+    }
+  },
 };
 </script>
 
-<style scoped></style>
+<style>
+
+.myTableClass td {
+    font-size: 1.3rem !important;
+    padding: .8rem !important;
+}
+</style>

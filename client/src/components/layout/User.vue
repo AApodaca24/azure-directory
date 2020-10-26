@@ -44,27 +44,41 @@
                 <v-flex>
                   <v-container style="padding:2rem">
                     <small
-                      style="letter-spacing:.2rem;text-transform:uppercase;"
+                      style="letter-spacing:.2rem;text-transform:uppercase;font-size:1.2em;"
                       >{{ user.rank }}</small
                     >
-                    <h2>{{ user.name }}</h2>
+                    <h2 style="font-size:2em;">{{ user.name }}</h2>
                     <h4>{{ user.title }}</h4>
-                    <br />
-                    <span>{{ user.email }}</span
-                    ><br />
-                    <span>{{ user.phone }}</span
-                    ><br />
-                    <span>{{ user.loc }}</span>
+                    <div class="contacts">
+                      <v-btn icon large :href="`mailto:${user.email}`">
+                        <v-icon>mail</v-icon>
+                      </v-btn>
+                      <v-btn icon large :href="`tel:${user.phone}`">
+                        <v-icon>phone</v-icon>
+                      </v-btn>
+                      <v-btn
+                        icon
+                        large
+                        :to="{
+                          name: 'deptMap',
+                          params: { dept: user.dept },
+                          query: { room: user.loc },
+                        }"
+                      >
+                        <v-icon>location_on</v-icon>
+                      </v-btn>
+                    </div>
+                    <v-flex>
+                      <v-chip
+                        v-for="(a, index) in user.hobbies"
+                        class="pr-4"
+                        :key="index"
+                        style="margin: 0 .2rem;"
+                      >
+                        {{ a }}
+                      </v-chip>
+                    </v-flex>
                   </v-container>
-                  <v-flex class="px-4">
-                    <v-chip
-                      v-for="(a, index) in user.hobbies"
-                      :key="index"
-                      style="margin: 0 .2rem;"
-                    >
-                      {{ a }}
-                    </v-chip>
-                  </v-flex>
                 </v-flex>
               </v-row>
               <v-row>
@@ -211,5 +225,10 @@ export default {
   position: absolute;
   right: 10%;
   justify-content: center;
+}
+
+.contacts {
+  display: flex;
+  width: 100%;
 }
 </style>
