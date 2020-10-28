@@ -55,13 +55,13 @@ export default {
         const el = document.getElementById(filtered[0]);
         const tl = gsap.timeline();
         tl.to(el, {
-          duration: 2,
+          duration: .5,
           scale: 1.5,
           ease: 'power1',
           transformOrigin: 'center',
         });
         tl.to(el, {
-          duration: 2,
+          duration: .5,
           scale: 1,
           ease: 'power1',
         });
@@ -99,6 +99,7 @@ export default {
         console.log(g.id);
         g.addEventListener('click', () => this.loadMap(g.id));
         g.addEventListener('mouseenter', e => this.animate(e.target.id));
+        g.style.cursor = 'pointer'
       });
       const groupsArr = Array.from(groups);
       gsap.from(groupsArr, {
@@ -122,7 +123,7 @@ export default {
 
 <style scoped>
 .dfMap {
-  height: 70vh;
+  height: 100%;
   display: grid;
   place-items: center;
 }
